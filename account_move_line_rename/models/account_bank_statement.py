@@ -23,5 +23,6 @@ class AccountBankStatementLine(models.Model):
                 'credit': st_line.amount > 0 and st_line.amount or 0.0,
                 'account_id': st_line.account_id.id,
             }
-            #st_line.process_reconciliation(new_aml_dicts=[vals])
+            if not st_line.journal_id.journal_user:
+               st_line.process_reconciliation(new_aml_dicts=[vals])
 
