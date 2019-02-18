@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="report_account_move_line_document">
+   <t t-call="web.internal_layout">
+      <div class="page">
+           <tbody>
+           <h3>LISTADO DE EFECTOS</h3>
+           <h5>Fecha : <span t-esc="time.strftime('%d-%m-%Y')"/></h5>
+             <table class="table table-condensed"  style="font-size: 70%;">
+                <thead>
+                    <tr style='background-color:#D8D8D8'>
+                        <th>Mov.</th>
+                        <th>Comentario</th>
+                        <th class="text-right">F.Vigencia</th>
+                        <th class="text-right">Factura</th>
+                        <th>Empresa</th>
+                        <th class="text-right">Vencimiento</th>
+                        <th>Debe</th>
+                        <th>Haber</th>
+                        <th>Imp.A Pagar</th>
+                    </tr>
+               </thead>
+              <t t-set="i" t-value="0"/>
+              <t t-set="i2" t-value="0"/>
+              <tr t-foreach="docs" t-as="o">
+                   <th t-field="o.move_id.name"/>
+                   <th t-field="o.name"/>
+                   <th t-field="o.date" t-field-options='{"format":"dd-MM-y"}'/>
+                   <th t-if="o.invoice_id" t-field="o.invoice_id.number"/>
+                   <th t-if="not o.invoice_id"><span></span></th>
+                   <th t-if="o.partner_id" t-field="o.partner_id.name"/>
+                   <th t-if="not o.partner_id"><span></span></th>
+                   <th t-field="o.date_maturity" t-field-options='{"format":"dd-MM-y"}'/>
+                   <th class="text-right" t-field="o.debit"/>
+                   <th class="text-right" t-field="o.credit"/>
+                   <t t-set="i" t-value="i+o.debit"/>
+                   <t t-set="i2" t-value="i2+o.credit"/>
+              </tr>
+              <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th class="text-right"></th>
+                        <th class="text-right"></th>
+                        <th></th>
+                        <th class="text-right"></th>
+                        <th class="text-right"><t t-esc="i"/></th>
+                        <th class="text-right"><t t-esc="i2"/></th>
+                        <th><t t-esc="i-i2"/></th>
+                    </tr>
+               </thead>
+            </table>
+          </tbody>
+         
+
+  
+     </div>
+   </t>
+</template>
+
+<!--<template id="report_account_move_line">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'ib_report_account_move_line.report_account_move_line_document')"/>
+        </t>
+    </t>
+</template>-->
+</data>
+</openerp>
+
+
+

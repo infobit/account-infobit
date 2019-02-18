@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="custom_report_account_move_line"
+            model="account.move.line"
+            string="Listado Efectos"
+            report_type="qweb-pdf"
+            name="ib_report_account_move_line.report_account_move_line_document"
+            attachment_use="False"
+            file="ib_report_account_move_line.report_account_move_line_document"
+        />
+
+        <record id="paperformat_lowmargin" model="report.paperformat">
+         <field name="name">Europena A4 low margin</field>
+         <field name="default" eval="True"/>
+         <field name="format">A4</field>
+         <field name="page_height">0</field>
+         <field name="page_width">0</field>
+         <field name="orientation">Portrait</field>
+         <field name="margin_top">3</field>
+         <field name="margin_bottom">3</field>
+         <field name="margin_left">3</field>
+         <field name="margin_right">3</field>
+         <field name="header_line" eval="False"/>
+         <field name="header_spacing">0</field>
+         <field name="dpi">90</field>
+        </record>
+
+        <!--<record id="ib_report_account_move_line.custom_report_account_move_line" model="ir.actions.report.xml">
+          <field name="paperformat_id" ref="ib_report_account_move_line.paperformat_lowmargin" />
+        </record>-->
+        
+        
+    </data>
+</openerp>
