@@ -25,11 +25,11 @@
               <t t-set="i2" t-value="0"/>
               <tr t-foreach="docs" t-as="o">
                    <th t-field="o.move_id.name"/>
-                   <th t-field="o.name"/>
+                   <th t-esc="o.name[0:20]"/>
                    <th t-field="o.date" t-field-options='{"format":"dd-MM-y"}'/>
                    <th t-if="o.invoice_id" t-field="o.invoice_id.number"/>
                    <th t-if="not o.invoice_id"><span></span></th>
-                   <th t-if="o.partner_id" t-field="o.partner_id.name"/>
+                   <th t-if="o.partner_id" t-esc="o.partner_id.name[0:20]"/>
                    <th t-if="not o.partner_id"><span></span></th>
                    <th t-field="o.date_maturity" t-field-options='{"format":"dd-MM-y"}'/>
                    <th class="text-right" t-field="o.debit"/>
@@ -45,9 +45,9 @@
                         <th class="text-right"></th>
                         <th></th>
                         <th class="text-right"></th>
-                        <th class="text-right"><t t-esc="i"/></th>
-                        <th class="text-right"><t t-esc="i2"/></th>
-                        <th><t t-esc="i-i2"/></th>
+                        <th class="text-right"><t t-esc="round(i,2)"/></th>
+                        <th class="text-right"><t t-esc="round(i2,2)"/></th>
+                        <th><t t-esc="round(i-i2,2)"/></th>
                     </tr>
                </thead>
             </table>
