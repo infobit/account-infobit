@@ -14,6 +14,8 @@ Developed for Infobit informatica s.l.
 	"category" : "Partner Modules",
 	"init_xml" : [],
 	"demo_xml" : [],
-	"data" : ['views/bank_statement.xml'],
+	"data" : ['views/bank_statement.xml',
+                  'views/account_move_line.xml' 
+        ],
 	"installable": True
 }

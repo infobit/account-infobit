@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="view_account_move_line_tree_payment_inherit" model="ir.ui.view">
+    <field name="name">account.move.line.tree.payment.inherit</field>
+    <field name="model">account.move.line</field>
+    <field name="inherit_id" ref="account.view_move_line_tree"/>
+    <field name="arch" type="xml">
+       <field name="credit" position="after">
+           <field name="payment_mode_id"/>
+           <field name="partner_bank_id"/>
+       </field>
+    </field>
+</record>
+
+</odoo>

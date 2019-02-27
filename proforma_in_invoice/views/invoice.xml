@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_invoice_form_change_state" model="ir.ui.view">
+            <field name="name">invoice.form.change.state</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <button name="invoice_print" position="before">
+                   <button name="action_proforma" type="object" string="Proforma" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>
