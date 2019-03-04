@@ -21,3 +21,6 @@ class AccountInvoice(models.Model):
                 res['name'] = '/'
                 res['product_id'] = False
         return res
+
+
+

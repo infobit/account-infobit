@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <button name="invoice_print" position="before">
                    <button name="action_proforma" type="object" string="Proforma" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                   <button name="action_invoice_draft" states="cancel,proforma" string="Reset to Draft" type="object" groups="account.group_account_invoice"/>
                 </button>
             </field>
         </record>

@@ -34,3 +34,8 @@ class AccountInvoice(models.Model):
         else:
            raise Warning('No exite diario para Proforma')
         return True
+
+class AccountInvoiceLine(models.Model):
+    _inherit = "account.invoice.line"
+    _order = "invoice_id,origin,sequence,id" #,layout_category_id"
+
