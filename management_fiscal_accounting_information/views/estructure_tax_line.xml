@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_estructure_tax_line_form" model="ir.ui.view">
+      <field name="name">view.estructure_tax_line.form</field>
+      <field name="model">estructure.tax.line</field>
+      <field name="arch" type="xml">
+        <form string="Detail taxes">
+          <sheet>
+            <group name="Detail">
+              <field name="ref"/>
+              <!--<field name="comment"/>-->
+              <field name="type"/>
+              <field name="invoice_date" />
+              <field name="partner_id" />
+              <field name="vat_number" />
+              <!--<field name="move_id" />-->
+              <!--<field name="invoice_id" />-->
+              <field name="tax_id" />
+              <field name="amount_untaxed"/>
+              <field name="amount_tax"/>
+              <field name="amount_refund_untaxed"/>
+              <field name="amount_refund_tax"/>
+              <field name="amount_total_untaxed"/>
+              <field name="amount_total_tax"/>
+              <field name="amount_total"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_estructure_tax_line_tree" model="ir.ui.view">
+      <field name="name">view.estructure.tax.line.tree</field>
+      <field name="model">estructure.tax.line</field>
+      <field name="arch" type="xml">
+        <tree string="Details"> <!--colors="red:exception==True">-->
+              <field name="ref" string="Factura"/>
+              <!--<field name="comment"/>-->
+              <field name="type" string="Tipo"/>
+              <field name="invoice_date"  string="Fecha"/>
+              <field name="partner_id"  string="Empresa"/>
+              <field name="vat_number"  string="CIF"/>
+              <!--<field name="move_id" />
+              <field name="invoice_id" />-->
+              <field name="tax_id"  string="Impuesto"/>
+              <field name="amount_untaxed" string="Base"/>
+              <field name="amount_tax" string="Cuota"/>
+              <field name="amount_total" string="Total"/>
+              <field name="amount_refund_untaxed" string="Base Abo."/>
+              <field name="amount_refund_tax" string="Cuota Abo."/>
+              <field name="amount_total_untaxed" string="Base Total"/> 
+              <field name="amount_total_tax" string="Cuotat Total"/>
+        </tree>
+      </field>
+    </record>
+</odoo>

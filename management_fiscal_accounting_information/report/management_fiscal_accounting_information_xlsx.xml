@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="details_taxes_xlsx" model="ir.actions.report">
+        <field name="name">details taxes XLSX report</field>
+        <field name="model">management_fiscal_accounting_information.ManagementFiscalAccountingInformation</field>
+        <field name="type">ir.actions.report</field>
+        <field name="report_name">management_fiscal_accounting_information.details_taxes_xlsx</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_file">details_taxes_xlsx</field>
+    </record>
+
+</odoo>

@@ -27,7 +27,7 @@
     'author': 'Infobit Informatica',
     'website': 'http://www.infobitinformatica.es',
     'depends': [
-        'account'
+        'account', 'account_cancel'
     ],
     'description': """
 Este modulo modifica el campo status, e incorpora un nuevo estado Proforma

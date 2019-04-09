@@ -8,7 +8,18 @@
             <field name="arch" type="xml">
                 <button name="invoice_print" position="before">
                    <button name="action_proforma" type="object" string="Proforma" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
-                   <button name="action_invoice_draft" states="cancel,proforma" string="Reset to Draft" type="object" groups="account.group_account_invoice"/>
+                   <!--<button name="action_invoice_draft" states="cancel,proforma" string="Reset to Draft" type="object" groups="account.group_account_invoice"/>-->
+                </button>
+            </field>
+        </record>
+
+        <record id="view_invoice_cancel_form_change_state" model="ir.ui.view">
+            <field name="name">invoice.cancel.form.change.state</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit"/>
+            <field name="arch" type="xml">
+                <button name="action_invoice_cancel" position="replace">
+                   <button name="action_invoice_cancel" type="object" states="draft,open,proforma,paid" string="Cancel Invoice" groups="account.group_account_invoice"/>
                 </button>
             </field>
         </record>

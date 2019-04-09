@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="act_details_summary_taxes" model="ir.actions.act_window">
+            <field name="name">Details or summary taxes</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
+    </record>
+
+    <record id="view_management_fiscal_accounting_information_form" model="ir.ui.view">
+        <field name="name">management.fiscal.accounting.information.form</field>
+        <field name="model">management.fiscal.accounting.information</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Información fiscal y contable">
+                          <group>
+                               <field name="name"/>
+                               <field name="year"/>
+                               <field name="period_type"/>
+                               <field name="date_start"/>
+                               <field name="date_end"/>
+                               <field name="calculation_date"/> 
+                               <field name="state"/>
+                          </group>
+                          <group>
+                            <!--<button name="btn_account_journal" type="object" class="oe_highlight" string="Diario contable"/>
+                            <button name="btn_sumsandbalances" type="object" class="oe_highlight" string="Balance de sumas y saldos"/>-->
+                            <button name="btn_taxes_summary" type="object" class="oe_highlight" string="Resumen de impuestos"/>
+                            <button name="btn_detail_taxes" type="object" class="oe_highlight" string="Detalle de impuestos"/>
+                            <button class="oe_inline oe_stat_button" type="action" name="%(management_fiscal_accounting_information.act_details_summary_taxes)d" 
+                             attrs="{'invisible': [('state', '=', 'processed')]}" string="Ver detalle o resumen de impuestos">
+                            </button>
+                            <!--<button name="export_xlsx"
+                             string="Export to XLSX"
+                             type="object"
+                             icon="fa-file-excel"
+                             attrs="{'invisible':[('state', '=', 'draft')]}"/>-->
+                          </group>
+                          <notebook tabpos="up" colspan="4">
+                           <page string="Taxes" name="taxes">
+                            <group>
+                              <field name="tax_ids" nolabel="1"/>
+                            </group>
+                           </page>
+                           <page string="Journals" name="journals">
+                            <group> 
+                              <field name="journal_ids" nolabel="1"/>
+                            </group>
+                           </page>
+                           <page string="Partners" name="partners">
+                            <group>
+                              <field name="partner_ids" nolabel="1"/>
+                            </group>
+                           </page>
+                           <page string="Detail and Summary Taxes" name="taxes">
+                            <group>
+                              <field name="estructure_tax_line_ids" nolabel="1"/>
+                            </group>
+                           </page>
+                          </notebook>
+            </form>
+         </field>
+    </record>
+
+    <record id="view_management_fiscal_accounting_information_tree" model="ir.ui.view">
+     <field name="name">management.fiscal.accounting.information.tree</field>
+     <field name="model">management.fiscal.accounting.information</field>
+     <field name="type">tree</field>
+     <field name="arch" type="xml">
+      <tree string="Información fiscal y contable">
+           <field name="state"/>
+           <field name="name"/>
+           <field name="year"/>
+           <field name="period_type"/>
+           <field name="date_start"/>
+           <field name="date_end"/>
+           <field name="calculation_date"/>
+      </tree>
+     </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_management_fiscal_accounting_information">
+                <field name="name">Informacion fiscal y contable</field>
+                <field name="res_model">management.fiscal.accounting.information</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="menu_management_fiscal_accounting_information"
+      parent="account.menu_finance"
+      action="action_management_fiscal_accounting_information"
+      name="Información fiscal y contable"/>
+
+    <!-- sequence="340" -->
+
+</odoo>
