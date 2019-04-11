@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+	<record model="ir.ui.view" id="account_tax_group_form">
+		<field name="name">account.tax.group.form</field>
+		<field name="model">account.tax.group</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="account_group_menu.view_account_tax_group_form" />
+		<field name="arch" type="xml">
+	         <field name="sequence" position="after">
+                     <field name="type_taxes_information_id"/>
+                 </field>
+		</field>
+	</record>
+
+        <record id="view_account_tax_group_search" model="ir.ui.view">
+            <field name="name">account.tax.group.search</field>
+            <field name="model">account.tax.group</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="account_group_menu.view_account_tax_group_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="type_taxes_information_id"/>
+                </field>
+            </field>
+        </record>
+  </data>
+</openerp>

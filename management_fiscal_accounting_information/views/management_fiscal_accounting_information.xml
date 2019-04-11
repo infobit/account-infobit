@@ -26,8 +26,8 @@
                                <field name="state"/>
                           </group>
                           <group>
-                            <!--<button name="btn_account_journal" type="object" class="oe_highlight" string="Diario contable"/>
-                            <button name="btn_sumsandbalances" type="object" class="oe_highlight" string="Balance de sumas y saldos"/>-->
+                            <!--<button name="btn_account_journal" type="object" class="oe_highlight" string="Diario contable"/>-->
+                            <button name="btn_taxes_iva_summary" type="object" class="oe_highlight" string="Resumen de IVA"/>
                             <button name="btn_taxes_summary" type="object" class="oe_highlight" string="Resumen de impuestos"/>
                             <button name="btn_detail_taxes" type="object" class="oe_highlight" string="Detalle de impuestos"/>
                             <button class="oe_inline oe_stat_button" type="action" name="%(management_fiscal_accounting_information.act_details_summary_taxes)d" 
