@@ -377,7 +377,7 @@ class ManagementFiscalAccountingInformation(models.Model):
           journals = [x.id for x in self.journal_ids]
           partners = [x.id for x in self.partner_ids]
           #BUSCAR APLICACIONES IMPUESTOS
-          self._cr.execute("SELECT t.type_tax_use as type, sum(it.base) as base, sum(it.amount) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id inner join account_invoice i on it.invoice_id = i.id and (i.date_invoice between %s and %s) where t.id in %s group by t.type_tax_use", (self.date_start, self.date_end, tuple(taxes),))
+          self._cr.execute("SELECT t.type_tax_use as type, sum(it.base) as base, sum(it.amount) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id where t.id in %s group by t.type_tax_use", (tuple(taxes),))
           types = self._cr.dictfetchall()
           for type in types:
            #grabar registro tipo aplicacion impuesto
@@ -389,22 +389,19 @@ class ManagementFiscalAccountingInformation(models.Model):
            }
            regtipo = self.env['estructure.tax.line'].create(rtaplimp)
            #BUSCAR ACCOUNT.TAX.GROUPS DE LOS IMPUESTOS.
-           self._cr.execute("SELECT tax.type_taxes_information_id as group, sum(it.base) as base, sum(it.amount) as cuota FROM account_invoice_tax it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax on it.tax_id = tax.id inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id where " +
-"(i.state = 'open' and it.tax_id in %s and (i.date_invoice between %s and %s) and tti.type_tax_use = %s) or (i.state = 'paid' and it.tax_id in %s and (i.date_invoice between %s and %s) and tti.type_tax_use = %s)" +
-"group by tax.type_taxes_information_id", (tuple(taxes), self.date_start, self.date_end, type['type'], tuple(taxes), self.date_start, self.date_end, type['type']))
-           #self._cr.execute("SELECT t.type_taxes_information_id as group, sum(it.base) as base, sum(it.amount) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id inner join type_taxes_information tti on t.type_taxes_information_id = tti.id inner join account_invoice i on it.invoice_id = i.id and (i.date_invoice between %s and %s) where " +
-#"t.id in %s and tti.type_tax_use = %s group by t.type_taxes_information_id", (self.date_start, self.date_end, tuple(taxes), type['type']))
+           self._cr.execute("SELECT t.type_taxes_information_id as group, sum(it.base) as base, sum(it.amount) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id where " +
+"t.id in %s and t.type_tax_use = %s group by t.type_taxes_information_id", (tuple(taxes), type['type']))
            groups = self._cr.dictfetchall()
            for group in groups:
-            #sumbase = float(group['base']) or 0.0
-            #sumcuota = float(group['cuota']) or 0.0
+            sumbase = float(group['base']) or 0.0
+            sumcuota = float(group['cuota']) or 0.0
             #buscar si hay alguno en este grupo de otro tipo de uso de impuesto
-            #self._cr.execute("SELECT t.type_taxes_information_id as group, sum(it.base) as base, sum(it.amount) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id where " +
-#"t.id in %s and t.type_taxes_information_id = %s group by t.type_taxes_information_id", (tuple(taxes), group['group']))
-            #dotros = self._cr.dictfetchall()
-            #for dotro in dotros:
-            #   sumbase = sumbase + float(dotro['base'])
-            #   sumcuota = sumcuota + float(dotro['cuota']) 
+            self._cr.execute("SELECT t.type_taxes_information_id as group, sum(it.base) as base, sum(it.amount) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id where " +
+"t.id in %s and t.type_tax_use <> %s and t.type_taxes_information_id = %s group by t.type_taxes_information_id", (tuple(taxes), type['type'], group['group']))
+            dotros = self._cr.dictfetchall()
+            for dotro in dotros:
+               sumbase = sumbase + float(dotro['base'])
+               sumcuota = sumcuota + float(dotro['cuota']) 
             #grabar registro grupo
             #buscar nombre del tipo de grupo informativo
             namegroup = self.env['type.taxes.information'].browse(group['group']).name
@@ -419,10 +416,10 @@ class ManagementFiscalAccountingInformation(models.Model):
               if partners:
                self._cr.execute("SELECT impuesto, type, sum(base) as base, sum(cuota) as cuota from (SELECT distinct it.invoice_id, it.tax_id as impuesto, i.type as " + 
 "type, it.base as base, it.amount as cuota FROM account_invoice_line_tax lt right outer join account_invoice_line l on lt.invoice_line_id = l.id right outer join " + 
-"account_invoice i on l.invoice_id = i.id right join account_invoice_tax it on i.id = it.invoice_id left join account_tax tax on lt.tax_id = tax.id and tax.type_taxes_information_id = %s where " +
+"account_invoice i on l.invoice_id = i.id right join account_invoice_tax it on i.id = it.invoice_id left join account_tax tax on lt.tax_id = tax.id inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id and tti.type_tax_use = %s where " +
 "(i.state = 'open' and lt.tax_id in %s and (i.date_invoice between %s and %s) and i.journal_id in %s and i.partner_id in %s and tax.type_taxes_information_id = %s) or (i.state = 'paid' and lt.tax_id in %s " +
 "and (i.date_invoice between %s and %s) and i.journal_id in %s and i.partner_id in %s and tax.type_taxes_information_id = %s) order by it.invoice_id, it.tax_id, i.type) as totalivas group by impuesto, type order by impuesto, " +
-"type", (group['group'], tuple(taxes), self.date_start, self.date_end, tuple(journals), tuple(partners), group['group'], tuple(taxes), self.date_start, self.date_end, tuple(journals), tuple(partners), group['group']))
+"type", (tuple(taxes), self.date_start, self.date_end, tuple(journals), tuple(partners), group['group'], tuple(taxes), self.date_start, self.date_end, tuple(journals), tuple(partners), group['group']))
               else:
                self._cr.execute("SELECT impuesto, type, sum(base) as base, sum(cuota) as cuota from (SELECT distinct it.invoice_id, it.tax_id as impuesto, i.type as " + 
 "type, it.base as base, it.amount as cuota FROM account_invoice_line_tax lt right outer join account_invoice_line l on lt.invoice_line_id = l.id right outer join " + 
@@ -438,17 +435,17 @@ class ManagementFiscalAccountingInformation(models.Model):
 "(i.state = 'open' and lt.tax_id in %s and (i.date_invoice between %s and %s) and i.partner_id in %s and tax.type_taxes_information_id = %s) or (i.state = 'paid' and lt.tax_id in %s and (i.date_invoice between %s and %s) and tax.type_taxes_information_id = %s) and i.partner_id in %s" + 
 "order by it.invoice_id, it.tax_id, i.type) as totalivas group by impuesto, type order by impuesto, type", (tuple(taxes), self.date_start, self.date_end, tuple(partners), group['group'], tuple(taxes), self.date_start, self.date_end, tuple(partners), group['group']))
               else:
-               #raise Warning(group['group'])
-               self._cr.execute("SELECT it.tax_id as impuesto, i.type as type, sum(it.base) as base, sum(it.amount) as cuota FROM account_invoice_tax it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax on it.tax_id = tax.id and tax.type_taxes_information_id = %s where " +
-"(i.state = 'open' and it.tax_id in %s and (i.date_invoice between %s and %s)) or (i.state = 'paid' and it.tax_id in %s and (i.date_invoice between %s and %s))" +
-"group by it.tax_id, i.type order by it.tax_id, i.type", (group['group'], tuple(taxes), self.date_start, self.date_end, tuple(taxes), self.date_start, self.date_end))
+               self._cr.execute("SELECT impuesto, type, sum(base) as base, sum(cuota) as cuota from (SELECT distinct it.invoice_id, it.tax_id as impuesto, i.type " +
+"as type, it.base as base, it.amount as cuota FROM account_invoice_line_tax lt right outer join account_invoice_line l on lt.invoice_line_id = l.id right outer join " +
+"account_invoice i on l.invoice_id = i.id right join account_invoice_tax it on i.id = it.invoice_id left join account_tax tax on lt.tax_id = tax.id where " + 
+"(i.state = 'open' and lt.tax_id in %s and (i.date_invoice between %s and %s) and tax.type_taxes_information_id = %s) or (i.state = 'paid' and lt.tax_id in %s and (i.date_invoice between %s and %s) and t.type_taxes_information_id = %s) " +
+"order by it.invoice_id, it.tax_id, i.type) as totalivas group by impuesto, type order by impuesto, type", (tuple(taxes), self.date_start, self.date_end, group['group'], tuple(taxes), self.date_start, self.date_end, group['group']))
             data3 = self._cr.dictfetchall()
-            #raise Warning(data3)
             regr = False
             for rimpfac in data3:
-                 if rimpfac['type'] == 'out_invoice' or rimpfac['type'] == 'in_invoice':
-                  #crear registro factura
-                  rimpfact = {
+                if rimpfac['type'] == 'out_invoice' or rimpfac['type'] == 'in_invoice':
+                 #crear registro factura
+                 rimpfact = {
                    'management_id': self.id,
                    #'ref': 'TOTAL IMPUESTO',
                    'tax_id': rimpfac['impuesto'], 
@@ -456,13 +453,13 @@ class ManagementFiscalAccountingInformation(models.Model):
                    'amount_tax': rimpfac['cuota'],
                    'amount_total_untaxed': rimpfac['base'] or 0.0,
                    'amount_total_tax': rimpfac['cuota'] or 0.0,
-                  }
-                  regr = self.env['estructure.tax.line'].create(rimpfact)
-                  #raise Warning(regr)
-                 else:
-                  if regr and rimpfac['type'] != 'proforma':
-                   #modificar registro factura
-                   mimpfact = {
+                 }
+                 regr = self.env['estructure.tax.line'].create(rimpfact)
+                 #raise Warning(regr)
+                else:
+                 if regr and rimpfac['type'] != 'proforma':
+                  #modificar registro factura
+                  mimpfact = {
                    'amount_refund_untaxed': rimpfac['base'],
                    'amount_refund_tax': rimpfac['cuota'],
                    'amount_total_untaxed': regr.amount_untaxed -  rimpfac['base'] or 0.0,
