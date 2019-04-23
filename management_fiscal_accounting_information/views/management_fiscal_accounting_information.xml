@@ -10,6 +10,17 @@
             <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
     </record>
 
+    <!--<record id="act_summary_taxes" model="ir.actions.act_window">
+            <field name="name">Details or summary taxes</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_estructure_tax_line_summary_tree"/>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+    </record>-->
+
+ 
     <record id="view_management_fiscal_accounting_information_form" model="ir.ui.view">
         <field name="name">management.fiscal.accounting.information.form</field>
         <field name="model">management.fiscal.accounting.information</field>
@@ -29,9 +40,12 @@
                             <!--<button name="btn_account_journal" type="object" class="oe_highlight" string="Diario contable"/>-->
                             <button name="btn_taxes_iva_summary" type="object" class="oe_highlight" string="Resumen de IVA"/>
                             <button name="btn_taxes_summary" type="object" class="oe_highlight" string="Resumen de impuestos"/>
+                            <button class="oe_inline oe_stat_button2" type="action" name="%(management_fiscal_accounting_information.act_summary_taxes)d" 
+                             attrs="{'invisible': [('state', '=', 'processed')]}" string="Ver resumen de ivas o de impuestos">
+                            </button>
                             <button name="btn_detail_taxes" type="object" class="oe_highlight" string="Detalle de impuestos"/>
                             <button class="oe_inline oe_stat_button" type="action" name="%(management_fiscal_accounting_information.act_details_summary_taxes)d" 
-                             attrs="{'invisible': [('state', '=', 'processed')]}" string="Ver detalle o resumen de impuestos">
+                             attrs="{'invisible': [('state', '=', 'processed')]}" string="Ver detalle de ivas o impuestos">
                             </button>
                             <!--<button name="export_xlsx"
                              string="Export to XLSX"

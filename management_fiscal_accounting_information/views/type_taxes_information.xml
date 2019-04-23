@@ -10,7 +10,9 @@
             <group>
               <field name="name"/>
               <field name="exclude"/>
+              <field name="exclude_amount_untaxes"/>
               <field name="type_tax_use"/>
+              <field name="include_tax_diferent"/>
             </group>
           </sheet>
         </form>
@@ -24,8 +26,23 @@
         <tree string="Type taxes informaticon"> <!--colors="red:exception==True">-->
               <field name="name" string="Name"/>
               <field name="exclude" string="Exclude"/>
+              <field name="exclude_amount_untaxes" string="Exclude A.Untaxed"/>
               <field name="type_tax_use"/> 
+              <field name="include_tax_diferent"/>
         </tree>
       </field>
     </record>
+
+    <record model="ir.actions.act_window" id="action_type_taxes_information">
+                <field name="name">Tipos de ivas</field>
+                <field name="res_model">type.taxes.information</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_type_taxes_information"
+      parent="account.menu_finance_configuration"
+      action="action_type_taxes_information"
+      name="Tipos de Impuestos - resumen IVA"/>
+    
 </odoo>

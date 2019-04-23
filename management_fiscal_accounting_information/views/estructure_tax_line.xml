@@ -54,4 +54,37 @@
         </tree>
       </field>
     </record>
+
+    <!--vista tree resumen ivas e impuestos-->
+    <record id="view_estructure_tax_line_summary_tree" model="ir.ui.view">
+      <field name="name">view.estructure.tax.line.summary.tree</field>
+      <field name="model">estructure.tax.line</field>
+      <field name="arch" type="xml">
+        <tree string="Summary"> <!--colors="red:exception==True">-->
+              <field name="ref" string="Reference"/>
+              <field name="tax_id"  string="Impuesto"/>
+              <!--<field name="amount_untaxed" string="Base"/>
+              <field name="amount_tax" string="Cuota"/>
+              <field name="amount_total" string="Total"/>
+              <field name="amount_refund_untaxed" string="Base Abo."/>
+              <field name="amount_refund_tax" string="Cuota Abo."/>-->
+              <field name="amount_total_untaxed" string="Base Total"/>
+              <field name="amount_total_tax" string="Cuotat Total"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="act_summary_taxes" model="ir.actions.act_window">
+            <field name="name">Details or summary taxes</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_estructure_tax_line_summary_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
+    </record>
+
+
+
 </odoo>

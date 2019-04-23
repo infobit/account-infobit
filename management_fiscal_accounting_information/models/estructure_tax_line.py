@@ -11,6 +11,7 @@ class estructure_tax_line(models.Model):
     _name = 'estructure.tax.line'
     
     management_id = fields.Many2one('management.fiscal.accounting.information', 'Management')
+    group_id = fields.Many2one('type.taxes.information', 'Type taxes information')
     ref = fields.Char('Reference')
     type = fields.Char('Type')
     comment = fields.Char('Comment')    

@@ -9,7 +9,6 @@
 		<field name="arch" type="xml">
 	         <field name="tax_group_id" position="after">
                      <field name="type_taxes_information_id"/>
-                     <field name="exclude"/>
                  </field>
 		</field>
 	</record>
@@ -22,7 +21,6 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="type_taxes_information_id"/>
-                    <field name="exclude"/>
                 </field>
             </field>
         </record>
