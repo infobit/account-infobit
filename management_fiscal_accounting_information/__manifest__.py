@@ -18,10 +18,11 @@
        - El detalle de impuestos
     """,
     'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'views/estructure_tax_line.xml',
         'views/management_fiscal_accounting_information.xml',
         'views/type_taxes_information.xml',
-        #'views/account_tax_group.xml',
         'views/account_tax.xml',
         'report/management_fiscal_accounting_information_xlsx.xml',
     ],

@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_management_fiscal_accounting_information","management_fiscal_accounting_information.management_fiscal_accounting_information","management_fiscal_accounting_information.model_management_fiscal_accounting_information","management_fiscal_accounting_information.group_management_fiscal_accounting_information",1,1,1,1
+"access_type_taxes_information","management_fiscal_accounting_information.type_taxes_information","management_fiscal_accounting_information.model_type_taxes_information","management_fiscal_accounting_information.group_management_fiscal_accounting_information",1,1,1,1
+"access_estructure_tax_line","management_fiscal_accounting_information.estructure_tax_line","management_fiscal_accounting_information.model_estructure_tax_line","management_fiscal_accounting_information.group_management_fiscal_accounting_information",1,1,1,1

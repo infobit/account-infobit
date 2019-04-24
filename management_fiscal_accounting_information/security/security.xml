@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="group_management_fiscal_accounting_information" model="res.groups">
+        <field name="name">Management fiscal accounting information</field>
+    </record>
+</data>
+</openerp>

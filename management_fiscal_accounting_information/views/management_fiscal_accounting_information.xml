@@ -1,57 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="act_details_summary_taxes" model="ir.actions.act_window">
-            <field name="name">Details or summary taxes</field>
-            <field name="res_model">estructure.tax.line</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('management_id','=', active_id)]</field>
-            <field name="context">{'search_default_management_id': active_id}</field>
-            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
-    </record>
-
-    <!--<record id="act_summary_taxes" model="ir.actions.act_window">
-            <field name="name">Details or summary taxes</field>
-            <field name="res_model">estructure.tax.line</field>
-            <field name="view_type">tree</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_estructure_tax_line_summary_tree"/>
-            <field name="domain">[('management_id','=', active_id)]</field>
-            <field name="context">{'search_default_management_id': active_id}</field>
-    </record>-->
-
- 
     <record id="view_management_fiscal_accounting_information_form" model="ir.ui.view">
         <field name="name">management.fiscal.accounting.information.form</field>
         <field name="model">management.fiscal.accounting.information</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Información fiscal y contable">
+                          <header>
+                               <button name="btn_taxes_iva_summary" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'calculated')]}" string="Resumen de IVA"/>
+                               <button name="btn_taxes_summary" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'calculated')]}" string="Resumen de impuestos"/>
+                               <button class="oe_inline oe_stat_button2" type="action" name="%(management_fiscal_accounting_information.act_summary_taxes)d" 
+                               attrs="{'invisible': ['|', ('state', '=', 'draft'), ('type', '=', 'd')]}" string="Ver resumen de ivas o de impuestos">
+                               </button>
+                               <button name="btn_taxes_iva_details" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'calculated')]}" string="Detalle de IVA - Libro registro IVA"/>
+                               <button name="btn_detail_taxes" type="object" class="oe_highlight" attrs="{'invisible': [('state', '=', 'calculated')]}" string="Detalle de impuestos"/>
+                               <button class="oe_inline oe_stat_button" type="action" name="%(management_fiscal_accounting_information.act_details_summary_taxes)d" 
+                               attrs="{'invisible': ['|', ('state', '=', 'draft'), ('type', '=', 's')]}" string="Ver detalle de ivas o impuestos">
+                               </button>
+                               btn_taxes_iva_details
+                               <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,calculated"/>
+                          </header>
                           <group>
-                               <field name="name"/>
+                            <group>
+                               <field name="name" readonly="True"/>
                                <field name="year"/>
+                            </group>
+                            <group>
                                <field name="period_type"/>
                                <field name="date_start"/>
+                            </group>
+                            <group> 
                                <field name="date_end"/>
-                               <field name="calculation_date"/> 
-                               <field name="state"/>
-                          </group>
-                          <group>
-                            <!--<button name="btn_account_journal" type="object" class="oe_highlight" string="Diario contable"/>-->
-                            <button name="btn_taxes_iva_summary" type="object" class="oe_highlight" string="Resumen de IVA"/>
-                            <button name="btn_taxes_summary" type="object" class="oe_highlight" string="Resumen de impuestos"/>
-                            <button class="oe_inline oe_stat_button2" type="action" name="%(management_fiscal_accounting_information.act_summary_taxes)d" 
-                             attrs="{'invisible': [('state', '=', 'processed')]}" string="Ver resumen de ivas o de impuestos">
-                            </button>
-                            <button name="btn_detail_taxes" type="object" class="oe_highlight" string="Detalle de impuestos"/>
-                            <button class="oe_inline oe_stat_button" type="action" name="%(management_fiscal_accounting_information.act_details_summary_taxes)d" 
-                             attrs="{'invisible': [('state', '=', 'processed')]}" string="Ver detalle de ivas o impuestos">
-                            </button>
-                            <!--<button name="export_xlsx"
-                             string="Export to XLSX"
-                             type="object"
-                             icon="fa-file-excel"
-                             attrs="{'invisible':[('state', '=', 'draft')]}"/>-->
+                               <field name="calculation_date"/>
+                               <field name="type"/> 
+                            </group>
                           </group>
                           <notebook tabpos="up" colspan="4">
                            <page string="Taxes" name="taxes">
@@ -69,11 +51,11 @@
                               <field name="partner_ids" nolabel="1"/>
                             </group>
                            </page>
-                           <page string="Detail and Summary Taxes" name="taxes">
+                           <!--<page string="Details Taxes" name="taxesd">
                             <group>
                               <field name="estructure_tax_line_ids" nolabel="1"/>
                             </group>
-                           </page>
+                           </page>-->
                           </notebook>
             </form>
          </field>
@@ -103,12 +85,12 @@
                 <field name="view_mode">tree,form</field>
     </record>
 
-
-    <menuitem id="menu_management_fiscal_accounting_information"
+    <menuitem id="menu_management_fiscal_accounting_information_initial"
       parent="account.menu_finance"
-      action="action_management_fiscal_accounting_information"
       name="Información fiscal y contable"/>
 
-    <!-- sequence="340" -->
-
+    <menuitem id="menu_management_fiscal_accounting_information"
+      parent="menu_management_fiscal_accounting_information_initial"
+      action="action_management_fiscal_accounting_information"
+      name="Generar información fiscal y contable"/>
 </odoo>
