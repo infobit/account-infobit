@@ -639,13 +639,102 @@ class ManagementFiscalAccountingInformation(models.Model):
                    else:
                       regd = self.env['estructure.tax.line'].create(impfact)
                    i+=1
+            #BUSCAR FACTURAS DE COMPRA QUE TENGAN IVAS EN SU TIPO DE INFORMACION DE TIPO VENTA -INTRA
+            if taxes and journals:
+              if partners:
+                 self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
+"cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and t.id in %s and " +
+"t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
+"i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and i.partner_id in %s and i.journal_id in %s and (i.date_invoice between %s and %s) inner join res_partner rp on i.partner_id = rp.id order by i.number", (tuple(taxes), tuple(partners), tuple(journals), self.date_start, self.date_end))
+              else:
+                 self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
+"cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and t.id in %s and " +
+"t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
+"i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and i.journal_id in %s and (i.date_invoice between %s and %s) inner join res_partner rp on i.partner_id = rp.id order by i.number", (tuple(taxes), tuple(journals), self.date_start, self.date_end))
+            else:
+              if partners:
+                 self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
+"cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and " +
+"t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
+"i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and i.partner_id in %s and (i.date_invoice between %s and %s) inner join res_partner rp on i.partner_id = rp.id order by i.number", (tuple(partners), self.date_start, self.date_end))
+              else:
+                 self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
+"cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and " +
+"t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
+"i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and (i.date_invoice between %s and %s) inner join res_partner rp on i.partner_id = rp.id order by i.number", (self.date_start, self.date_end, ))
+            dataintra = self._cr.dictfetchall()
+            it = 1
+            regd = False
+            invoicereg = False
+            for intra in dataintra:
+                if invoicereg != intra['id']:
+                   if intra['tipo'] == 'in_refund':
+                    impfacti = {
+                     'management_id': self.id,
+                     'ref': 'INT' + str(it),
+                     'type': 'Venta',
+                     'invoice_date': intra['fecha'],
+                     'partner_id': intra['partner'],
+                     'vat_number': intra['cif'],
+                     'invoice_id': intra['id'],
+                     'tax_id': intra['impuesto'], 
+                     'amount_untaxed': -intra['base'],
+                     'amount_tax': -intra['cuota'],
+                     'amount_total': intra['total'],
+                    }
+                   else:
+                    #crear registro factura
+                    cta = intra['cuota']
+                    if intra['cuota'] < 0:
+                       cta = -intra['cuota']
+                    impfacti = {
+                     'management_id': self.id,
+                     'ref': 'INT' + str(it),
+                     'type': 'Venta',
+                     'invoice_date': intra['fecha'],
+                     'partner_id': intra['partner'],
+                     'vat_number': intra['cif'],
+                     'invoice_id': intra['id'],
+                     'tax_id': intra['impuesto'], 
+                     'amount_untaxed': intra['base'],
+                     'amount_tax': cta,
+                     'amount_total': intra['total'],
+                    }
+                    regd = self.env['estructure.tax.line'].create(impfacti)
+                else:
+                    #modificar registro
+                    if intra['tipo'] == 'in_refund':
+                     impfacti = {
+                      'management_id': self.id,
+                      'invoice_id': intra['id'],
+                      'tax_id': intra['impuesto'], 
+                      'amount_untaxed': -intra['base'],
+                      'amount_tax': -intra['cuota'],
+                     }
+                    else:
+                     cta = intra['cuota']
+                     if intra['cuota'] < 0:
+                       cta = -intra['cuota']
+                     impfacti = {
+                      'management_id': self.id,
+                      'invoice_id': intra['id'],
+                      'tax_id': intra['impuesto'], 
+                      'amount_untaxed': intra['base'],
+                      'amount_tax': cta,
+                     }
+                     if regd:
+                        regd2 = regd.write(impfacti)
+                invoicereg = intra['id']
+                it+=1
+
             #BUSCAR EL RESUMEN DE IVAS
             self.calculate_taxes_iva_summary()
             self.write({'name': 'Detalle de IVAS - Libro registro IVA', 'type': 'd'})
             """raise UserError(_('No EAT Tax Mapping was found'))"""
-
-
-
 
 
     @api.multi
