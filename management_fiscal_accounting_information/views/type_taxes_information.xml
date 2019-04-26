@@ -13,6 +13,9 @@
               <field name="type_tax_use"/>
               <field name="include_tax_diferent"/>
             </group>
+            <group>
+             <field colspan="4" name="tax_ids"/>
+            </group>
           </sheet>
         </form>
       </field>

@@ -1,8 +1,4 @@
-# Copyright 2017 Praxya (http://praxya.com/)
-#                Daniel Rodriguez Lijo <drl.9319@gmail.com>
-# Copyright 2017 Eficent Business and IT Consulting Services, S.L.
-#                <contact@eficent.com>
-# License AGPL-3 - See https://www.gnu.org/licenses/agpl-3.0
+# -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
 
@@ -21,8 +17,6 @@ class type_taxes_information(models.Model):
         ('s', 'SI'), 
         ('n', 'NO')],
         string='Exclude', default='n')
-    #exclude = fields.Boolean('exclude')
-    #fields.Selection(selection=[('s', 'Si'), ('n', 'No')], string='Exclude', default='n')
     type_tax_use = fields.Selection(selection=[
         ('sale', 'Sale'),
         ('purchase', 'Purchase'),
@@ -33,4 +27,4 @@ class type_taxes_information(models.Model):
         ('s', 'SI'), 
         ('n', 'NO')],
         string='Include in Tax diferent', default='n')
-
+    tax_ids = fields.One2many('account.tax', 'type_taxes_information_id', 'Taxes')

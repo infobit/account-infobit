@@ -24,15 +24,13 @@
                             <group>
                                <field name="name" readonly="True"/>
                                <field name="year"/>
+                               <field name="calculation_date" readonly="True"/>
+                               <field name="type"/>
                             </group>
                             <group>
                                <field name="period_type"/>
                                <field name="date_start"/>
-                            </group>
-                            <group> 
                                <field name="date_end"/>
-                               <field name="calculation_date"/>
-                               <field name="type"/> 
                             </group>
                           </group>
                           <notebook tabpos="up" colspan="4">

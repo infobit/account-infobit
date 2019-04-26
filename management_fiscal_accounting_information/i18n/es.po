@@ -1,0 +1,643 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* management_fiscal_accounting_information
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-26 12:00+0000\n"
+"PO-Revision-Date: 2019-04-26 12:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_refund_tax
+msgid "Amount refund tax"
+msgstr "Cuota abono"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_refund_untaxed
+msgid "Amount refund untaxed"
+msgstr "B.imponible abono"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_tax
+msgid "Amount tax"
+msgstr "Cuota"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_total
+msgid "Amount total"
+msgstr "Base Imponible"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_total_tax
+msgid "Amount total tax"
+msgstr "Total cuota"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_total_untaxed
+msgid "Amount total untaxed"
+msgstr "Total b.imponible"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_amount_untaxed
+msgid "Amount untaxed"
+msgstr "Base Imponible"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:24
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+#, python-format
+msgid "Base"
+msgstr "Base"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Base Abo."
+msgstr "Base Abo."
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:26
+#, python-format
+msgid "Base Refund"
+msgstr "Base Abono"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:28
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_summary_tree
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+#, python-format
+msgid "Base Total"
+msgstr "Base total"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "CIF"
+msgstr "CIF"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_calculation_date
+msgid "Calculation date"
+msgstr "Fecha de cálculo"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,state:0
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_comment
+msgid "Comment"
+msgstr "Comentario"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_create_uid
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_create_uid
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_create_date
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_create_date
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Cuota"
+msgstr "Cuota"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Cuota Abo."
+msgstr "Cuota Abo."
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_summary_tree
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Cuotat Total"
+msgstr "Cuotat Total"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:21
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_form
+msgid "Detail taxes"
+msgstr "Detalle de impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Details"
+msgstr "Detalles"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.actions.act_window,name:management_fiscal_accounting_information.act_details_summary_taxes
+#: model:ir.actions.act_window,name:management_fiscal_accounting_information.act_summary_taxes
+msgid "Details or summary taxes"
+msgstr "Detalle o resumen impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Detalle de IVA - Libro registro IVA"
+msgstr "Detalle de IVA - Libro registro IVA"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Detalle de impuestos"
+msgstr "Detalle de impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_display_name
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_display_name
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,state:0
+msgid "Done"
+msgstr "Realizado"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_partner_id
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Empresa"
+msgstr "Empresa"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_date_end
+msgid "Ending date"
+msgstr "Fecha final"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,name:0
+msgid "Equivalence surcharge"
+msgstr "Recargo de equivalencia"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_exclude
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_type_taxes_information_tree
+msgid "Exclude"
+msgstr "Excluir"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_type_taxes_information_tree
+msgid "Exclude A.Untaxed"
+msgstr "Excluir B.Imponible"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_exclude_amount_untaxes
+msgid "Exclude amount untaxes"
+msgstr "Exclude B.Imponible"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Factura"
+msgstr "Factura"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Fecha"
+msgstr "Fecha"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.menu,name:management_fiscal_accounting_information.menu_management_fiscal_accounting_information
+msgid "Generar información fiscal y contable"
+msgstr "Generar información fiscal y contable"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_account_tax_generate_sale_intra
+msgid "Generate Sale Intra."
+msgstr "Generar Facturas de venta intracomunitarias."
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_id
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_id
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_name
+msgid "Identificador"
+msgstr "Identificador"
+
+#. module: management_fiscal_accounting_information
+#: sql_constraint:management.fiscal.accounting.information:0
+msgid "Identification and calculation date must be unique"
+msgstr "El Identificador y la fecha de calculo deben de ser únicos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_summary_tree
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Impuesto"
+msgstr "Impuesto"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_include_tax_diferent
+msgid "Include in Tax diferent"
+msgstr "Incluir en el calculo de la diferencia de ivas"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.actions.act_window,name:management_fiscal_accounting_information.action_management_fiscal_accounting_information
+msgid "Informacion fiscal y contable"
+msgstr "Informacion fiscal y contable"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.menu,name:management_fiscal_accounting_information.menu_management_fiscal_accounting_information_initial
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_tree
+msgid "Información fiscal y contable"
+msgstr "Información fiscal y contable"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,name:0
+msgid "Input TAX"
+msgstr "Soportado"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,name:0
+msgid "Input TAX not deductible"
+msgstr "Soportado no deducible"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:19
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_invoice_id
+#, python-format
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_invoice_date
+msgid "Invoice Date"
+msgstr "Fecha factura"
+
+#. module: management_fiscal_accounting_information
+#: selection:estructure.tax.line,line_type:0
+msgid "Issued"
+msgstr "Emitida"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_move_id
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_journal_ids
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Journals"
+msgstr "Diarios"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line___last_update
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information___last_update
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_write_uid
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_write_uid
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_write_date
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_write_date
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_line_type
+msgid "Line type"
+msgstr "Tipo de línea"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_estructure_tax_line_ids
+msgid "Lines of Taxes"
+msgstr "Lineas de impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_management_id
+msgid "Management"
+msgstr "Gestión"
+
+#. module: management_fiscal_accounting_information
+#: model:res.groups,name:management_fiscal_accounting_information.group_management_fiscal_accounting_information
+msgid "Management fiscal accounting information"
+msgstr "Gestión de información fiscal y contable"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_vat_number
+msgid "NIF"
+msgstr "NIF"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,exclude:0
+#: selection:type.taxes.information,include_tax_diferent:0
+msgid "NO"
+msgstr "NO"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_type_taxes_information_tree
+msgid "Name"
+msgstr "Nombre"
+
+#. module: management_fiscal_accounting_information
+#: selection:account.tax,generate_sale_intra:0
+#: selection:type.taxes.information,exclude_amount_untaxes:0
+msgid "No"
+msgstr "No"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,type_tax_use:0
+msgid "None"
+msgstr "None"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,name:0
+msgid "Output TAX"
+msgstr "Repercutido"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:22
+#, python-format
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_partner_ids
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Partners"
+msgstr "Empresas"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_period_type
+msgid "Period type"
+msgstr "Tipo de periodo"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,state:0
+msgid "Posted"
+msgstr "Posted"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,state:0
+msgid "Processed"
+msgstr "Procesado"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,type_tax_use:0
+msgid "Purchase"
+msgstr "Soportado"
+
+#. module: management_fiscal_accounting_information
+#: selection:estructure.tax.line,line_type:0
+msgid "Received"
+msgstr "Recibido"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_ref
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_summary_tree
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: management_fiscal_accounting_information
+#: selection:estructure.tax.line,line_type:0
+msgid "Refund Issued"
+msgstr "Factura de abono de venta"
+
+#. module: management_fiscal_accounting_information
+#: selection:estructure.tax.line,line_type:0
+msgid "Factura de abono de compra"
+msgstr ""
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/models/management_fiscal_accounting_information.py:203
+#: code:addons/management_fiscal_accounting_information/models/management_fiscal_accounting_information.py:243
+#: code:addons/management_fiscal_accounting_information/models/management_fiscal_accounting_information.py:507
+#: code:addons/management_fiscal_accounting_information/models/management_fiscal_accounting_information.py:548
+#, python-format
+msgid "Rellene los impuestos a consultar"
+msgstr "Rellene los impuestos a consultar"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Resumen de IVA"
+msgstr "Resumen de IVA"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Resumen de impuestos"
+msgstr "Resumen de impuestos"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,exclude:0
+#: selection:type.taxes.information,include_tax_diferent:0
+msgid "SI"
+msgstr "SI"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,type_tax_use:0
+msgid "Sale"
+msgstr "Repercutido"
+
+#. module: management_fiscal_accounting_information
+#: selection:account.tax,generate_sale_intra:0
+#: selection:type.taxes.information,exclude_amount_untaxes:0
+msgid "Si"
+msgstr "Si"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_date_start
+msgid "Starting date"
+msgstr "Fecha inicial"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_state
+msgid "State"
+msgstr "Estado"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_summary_tree
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:30
+#, python-format
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:25
+#: model:ir.model,name:management_fiscal_accounting_information.model_account_tax
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_tax_id
+#, python-format
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:27
+#, python-format
+msgid "Tax Refund"
+msgstr "Cuota Abono"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:29
+#, python-format
+msgid "Tax Total"
+msgstr "Cuota total"
+
+#. module: management_fiscal_accounting_information
+#: selection:type.taxes.information,name:0
+msgid "Tax withholdings"
+msgstr "Retenciones fiscales"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_tax_ids
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_tax_ids
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Taxes"
+msgstr "Impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Tipo"
+msgstr "Tipo"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.menu,name:management_fiscal_accounting_information.menu_type_taxes_information
+msgid "Tipos de Impuestos - resumen IVA"
+msgstr "Tipos de Impuestos - resumen IVA"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.actions.act_window,name:management_fiscal_accounting_information.action_type_taxes_information
+msgid "Tipos de ivas"
+msgstr "Tipos de ivas"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_estructure_tax_line_tree
+msgid "Total"
+msgstr "Total"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:20
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_type
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_type
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_name
+#, python-format
+msgid "Type"
+msgstr "Tipo"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_account_tax_type_taxes_information_id
+msgid "Type tax information"
+msgstr "Typo de información impuesto"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_type_taxes_information_type_tax_use
+msgid "Type tax use"
+msgstr "Typo uso impuesto"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_type_taxes_information_tree
+msgid "Type taxes informaticon"
+msgstr "Tipo de información impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_estructure_tax_line_group_id
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_type_taxes_information_form
+msgid "Type taxes information"
+msgstr "Type de información impuestos"
+
+#. module: management_fiscal_accounting_information
+#: code:addons/management_fiscal_accounting_information/report/management_fiscal_accounting_information_xlsx.py:23
+#, python-format
+msgid "VAT"
+msgstr "NIF"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Ver detalle de ivas o impuestos"
+msgstr "Ver detalle de ivas o impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "Ver resumen de ivas o de impuestos"
+msgstr "Ver resumen de ivas o de impuestos"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_management_fiscal_accounting_information_year
+msgid "Year"
+msgstr "Ejercicio"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model,name:management_fiscal_accounting_information.model_account_tax_group
+msgid "account.tax.group"
+msgstr "account.tax.group"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.ui.view,arch_db:management_fiscal_accounting_information.view_management_fiscal_accounting_information_form
+msgid "btn_taxes_iva_details"
+msgstr "btn_taxes_iva_details"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,type:0
+msgid "detail"
+msgstr "detalles"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.actions.report,name:management_fiscal_accounting_information.details_taxes_xlsx
+msgid "details taxes XLSX report"
+msgstr "details taxes XLSX report"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model,name:management_fiscal_accounting_information.model_estructure_tax_line
+msgid "estructure.tax.line"
+msgstr "estructure.tax.line"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model.fields,field_description:management_fiscal_accounting_information.field_account_tax_exclude
+msgid "exclude"
+msgstr "excluir"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model,name:management_fiscal_accounting_information.model_management_fiscal_accounting_information
+msgid "management.fiscal.accounting.information"
+msgstr "management.fiscal.accounting.information"
+
+#. module: management_fiscal_accounting_information
+#: selection:management.fiscal.accounting.information,type:0
+msgid "summary"
+msgstr "Resumen"
+
+#. module: management_fiscal_accounting_information
+#: model:ir.model,name:management_fiscal_accounting_information.model_type_taxes_information
+msgid "type.taxes.information"
+msgstr "type.taxes.information"
+

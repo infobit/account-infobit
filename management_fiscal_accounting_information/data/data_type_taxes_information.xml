@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+
+<record id="type_taxes_information_1" model="type.taxes.information">
+    <field name="name">outputtax</field>
+    <field name="exclude">n</field>
+    <field name="type_tax_use">sale</field>
+    <field name="exclude_amount_untaxes">n</field>
+    <field name="include_tax_diferent">s</field>
+</record>
+<record id="type_taxes_information_2" model="type.taxes.information">
+    <field name="name">inputtax</field>
+    <field name="exclude">n</field>
+    <field name="type_tax_use">purchase</field>
+    <field name="exclude_amount_untaxes">n</field>
+    <field name="include_tax_diferent">s</field>
+</record>
+<record id="type_taxes_information_3" model="type.taxes.information">
+    <field name="name">inputtax_not_deductible</field>
+    <field name="exclude">n</field>
+    <field name="type_tax_use">purchase</field>
+    <field name="exclude_amount_untaxes">n</field>
+    <field name="include_tax_diferent">n</field>
+</record>
+<record id="type_taxes_information_4" model="type.taxes.information">
+    <field name="name">tax_withholdings</field>
+    <field name="exclude">s</field>
+    <field name="type_tax_use">none</field>
+    <field name="exclude_amount_untaxes">n</field>
+    <field name="include_tax_diferent">n</field>
+</record>
+<record id="type_taxes_information_5" model="type.taxes.information">
+    <field name="name">equivalence_surcharge</field>
+    <field name="exclude">n</field>
+    <field name="type_tax_use">sale</field>
+    <field name="exclude_amount_untaxes">s</field>
+    <field name="include_tax_diferent">s</field>
+</record>
+
+</odoo>
+
