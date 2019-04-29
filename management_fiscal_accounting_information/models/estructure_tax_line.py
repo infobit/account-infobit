@@ -8,6 +8,8 @@ class estructure_tax_line(models.Model):
     
     management_id = fields.Many2one('management.fiscal.accounting.information', 'Management')
     group_id = fields.Many2one('type.taxes.information', 'Type taxes information')
+    account_group_id = fields.Many2one('account.group', 'Account Group')
+    account_id = fields.Many2one('account.account', 'Account')
     ref = fields.Char('Reference')
     type = fields.Char('Type')
     comment = fields.Char('Comment')    
@@ -38,3 +40,5 @@ class estructure_tax_line(models.Model):
     amount_total_untaxed = fields.Float('Amount total untaxed')
     amount_total_tax = fields.Float('Amount total tax')
     amount_total = fields.Float('Amount total')
+    year = fields.Integer('Year')
+    month = fields.Integer('Month')

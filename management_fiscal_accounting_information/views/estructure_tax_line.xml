@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="view_estructure_tax_line_form" model="ir.ui.view">
       <field name="name">view.estructure_tax_line.form</field>
       <field name="model">estructure.tax.line</field>
@@ -9,7 +8,6 @@
           <sheet>
             <group name="Detail">
               <field name="ref"/>
-              <!--<field name="comment"/>-->
               <field name="type"/>
               <field name="invoice_date" />
               <field name="partner_id" />
@@ -17,6 +15,9 @@
               <field name="move_id" />
               <field name="invoice_id" />
               <field name="tax_id" />
+              <field name="group_id"/>
+              <field name="account_group_id"/>
+              <field name="account_id"/>
               <field name="amount_untaxed"/>
               <field name="amount_tax"/>
               <field name="amount_refund_untaxed"/>
@@ -34,15 +35,12 @@
       <field name="name">view.estructure.tax.line.tree</field>
       <field name="model">estructure.tax.line</field>
       <field name="arch" type="xml">
-        <tree string="Details"> <!--colors="red:exception==True">-->
+        <tree string="Details">
               <field name="ref" string="Factura"/>
-              <!--<field name="comment"/>-->
               <field name="type" string="Tipo"/>
               <field name="invoice_date"  string="Fecha"/>
               <field name="partner_id"  string="Empresa"/>
               <field name="vat_number"  string="CIF"/>
-              <!--<field name="move_id" />
-              <field name="invoice_id" />-->
               <field name="tax_id"  string="Impuesto"/>
               <field name="amount_untaxed" string="Base"/>
               <field name="amount_tax" string="Cuota"/>
@@ -60,20 +58,50 @@
       <field name="name">view.estructure.tax.line.summary.tree</field>
       <field name="model">estructure.tax.line</field>
       <field name="arch" type="xml">
-        <tree string="Summary"> <!--colors="red:exception==True">-->
+        <tree string="Summary">
               <field name="ref" string="Reference"/>
-              <field name="tax_id"  string="Impuesto"/>
-              <!--<field name="amount_untaxed" string="Base"/>
-              <field name="amount_tax" string="Cuota"/>
-              <field name="amount_total" string="Total"/>
-              <field name="amount_refund_untaxed" string="Base Abo."/>
-              <field name="amount_refund_tax" string="Cuota Abo."/>-->
               <field name="amount_total_untaxed" string="Base Total"/>
               <field name="amount_total_tax" string="Cuotat Total"/>
         </tree>
       </field>
     </record>
 
+
+    <!--view summary book -->
+    <record id="view_summary_book" model="ir.ui.view">
+      <field name="name">view.summary.book.tree</field>
+      <field name="model">estructure.tax.line</field>
+      <field name="arch" type="xml">
+        <tree string="Summary"> <!--colors="red:exception==True">-->
+              <field name="year" string="Year"/>
+              <field name="month" string="Month"/>
+              <field name="ref" string="Descripción"/>
+              <field name="amount_untaxed" string="Debe"/>
+              <field name="amount_tax" string="Haber"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--view details book -->
+    <record id="view_details_book" model="ir.ui.view">
+      <field name="name">view.details.book.tree</field>
+      <field name="model">estructure.tax.line</field>
+      <field name="arch" type="xml">
+        <tree string="Summary"> <!--colors="red:exception==True">-->
+              <field name="move_id" string="Asiento"/>
+              <field name="invoice_date" string="Fecha"/>
+              <field name="ref" string="Comentario"/>
+              <field name="partner_id" string="Empresa"/>
+              <field name="account_id" string="Cuenta"/>
+              <field name="amount_untaxed" string="Debe"/>
+              <field name="amount_tax" string="Haber"/>
+        </tree>
+      </field>
+    </record>
+
+
+
+    <!--action detail taxes-->
     <record id="act_details_summary_taxes" model="ir.actions.act_window">
             <field name="name">Details or summary taxes</field>
             <field name="res_model">estructure.tax.line</field>
@@ -84,7 +112,7 @@
             <field name="context">{'search_default_management_id': active_id}</field>
     </record>   
 
-
+    <!--action summary taxes -->
     <record id="act_summary_taxes" model="ir.actions.act_window">
             <field name="name">Details or summary taxes</field>
             <field name="res_model">estructure.tax.line</field>
@@ -96,7 +124,28 @@
             <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
     </record>
 
+    <!--action book summary -->
+    <record id="act_summary_book" model="ir.actions.act_window">
+            <field name="name">Summary book</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_summary_book"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
+    </record>
 
-
+    <!--action book details -->
+    <record id="act_details_book" model="ir.actions.act_window">
+            <field name="name">Details book</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_details_book"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
+    </record>
 
 </odoo>

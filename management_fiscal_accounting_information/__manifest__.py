@@ -13,9 +13,10 @@
     'description': """
     Se incorporar una opción para generar los siguientes datos:
 
-       - El resumen de impuestos
-
-       - El detalle de impuestos
+       - El resumen de ivas
+       - El detalle de ivas
+       - Libro contable resumen por grupos de cuentas
+       - Libro contable detallado
     """,
     'data': [
         'security/security.xml',
