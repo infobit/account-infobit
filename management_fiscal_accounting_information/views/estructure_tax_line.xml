@@ -99,6 +99,19 @@
       </field>
     </record>
 
+    <!--view summary book balance 4-->
+    <record id="view_summary_book_balance4" model="ir.ui.view">
+      <field name="name">view.summary.book.balance4.tree</field>
+      <field name="model">estructure.tax.line</field>
+      <field name="arch" type="xml">
+        <tree string="Summary"> <!--colors="red:exception==True">-->
+              <field name="ref" string="Descripción"/>
+              <field name="amount_untaxed" string="Debe"/>
+              <field name="amount_tax" string="Haber"/>
+              <field name="amount_refund_untaxed" string="Saldo"/>
+        </tree>
+      </field>
+    </record>
 
 
     <!--action detail taxes-->
@@ -130,6 +143,18 @@
             <field name="res_model">estructure.tax.line</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="view_summary_book"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
+    </record>
+
+     <!--action book summary balance 4-->
+    <record id="act_summary_book_balance4" model="ir.actions.act_window">
+            <field name="name">Balance SyS 4 digits</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_summary_book_balance4"/>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('management_id','=', active_id)]</field>
             <field name="context">{'search_default_management_id': active_id}</field>

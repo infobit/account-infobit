@@ -91,6 +91,7 @@ class ManagementFiscalAccountingInformation(models.Model):
             ('s', 'summary'),
             ('d', 'detail'),
             ('b', 'summarybook'),
+            ('b4', 'balance4'),
             ('bd', 'detailbook'),
         ], string='Type',  readonly=True)
 
@@ -592,6 +593,52 @@ class ManagementFiscalAccountingInformation(models.Model):
             regr = self.env['estructure.tax.line'].create(rimpfact)
 
 
+    def calculate_summary_book_balance4(self):
+      if self.state == 'draft':
+       if self.account_group_ids:
+        groups = [x.id for x in self.account_group_ids]
+        journals = [x.id for x in self.journal_ids]
+        partners = [x.id for x in self.partner_ids]
+        #GRABAR LINEA CON PERIODO Y FILTROS APLICADOS
+        filtros = {
+                   'management_id': self.id,
+                   'ref': "Balance SyS 4 digitos desde " +  str(self.date_start)[8:10] + '-' + str(self.date_start)[5:7] + '-' + str(self.date_start)[0:4] + ' hasta ' + str(self.date_end)[8:10] + '-' + str(self.date_end)[5:7] + '-' + str(self.date_end)[0:4],
+        }
+        self.env['estructure.tax.line'].create(filtros)
+        for rec in self:
+           tax_model = self.env['account.tax']
+           if journals and partners:
+             self._cr.execute("SELECT sum(l.debit) as debe, sum(l.credit) as haber, ag.code_prefix as codigo, a.group_id as cuenta, ag.name as ncuenta FROM account_move_line l left join account_move m on l.move_id = m.id inner join account_account a on " +
+"l.account_id = a.id inner join account_group ag on a.group_id = ag.id WHERE l.journal_id IN %s " +
+"and (m.date between %s and %s) and l.partner_id in %s and a.group_id in %s group by a.group_id, ag.code_prefix, ag.name order by ag.code_prefix", (tuple(journals), self.date_start, self.date_end, tuple(partners), tuple(groups), ))
+           else:
+             if partners:
+                self._cr.execute("SELECT sum(l.debit) as debe, sum(l.credit) as haber, ag.code_prefix as codigo, a.group_id as cuenta, ag.name as ncuenta FROM account_move_line l left join account_move m on l.move_id = m.id inner join account_account a on " +
+"l.account_id = a.id inner join account_group ag on a.group_id = ag.id WHERE " +
+"(m.date between %s and %s) and l.partner_id in %s and a.group_id in %s group by a.group_id, ag.code_prefix, ag.name order by ag.code_prefix", (self.date_start, self.date_end, tuple(partners), tuple(groups), ))
+             else:
+                self._cr.execute("SELECT sum(l.debit) as debe, sum(l.credit) as haber, a.group_id as cuenta, ag.code_prefix as codigo, ag.name as ncuenta FROM account_move_line l left join account_move m on l.move_id = m.id inner join account_account a on " +
+"l.account_id = a.id inner join account_group ag on a.group_id = ag.id WHERE (m.date between %s and %s) and a.group_id in %s group by a.group_id, ag.code_prefix, ag.name order by ag.code_prefix", (self.date_start, self.date_end, tuple(groups), ))
+           datagroupaccount = self._cr.dictfetchall()
+           for groupa in datagroupaccount:
+            #crear registro libro resumen
+            rimpfact = {
+                   'management_id': self.id,
+                   'ref': groupa['codigo'] + " - " + groupa['ncuenta'],
+                   'account_group_id': groupa['cuenta'], 
+                   #'year': groupa['ejercicio'],
+                   'amount_refund_untaxed': groupa['debe'] - groupa['haber'],
+                   'amount_untaxed': groupa['debe'],
+                   'amount_tax': groupa['haber'],
+            }
+            regr = self.env['estructure.tax.line'].create(rimpfact)
+            #raise Warning(regr)
+        self.calculate_total_book_group()
+        self.write({'name': 'Balance SyS 4 digits', 'type': 'b4'})         
+       else:
+         raise UserError(_('Rellene los grupos de cuentas a consultar'))
+
+
 
     def calculate_summary_book(self):
       if self.state == 'draft':
@@ -747,6 +794,12 @@ class ManagementFiscalAccountingInformation(models.Model):
                     'calculation_date': fields.Datetime.now()})
         return res
 
+    @api.multi
+    def btn_summary_book_balance4(self):
+        res = self.calculate_summary_book_balance4()
+        self.write({'state': 'calculated',
+                    'calculation_date': fields.Datetime.now()})
+        return res
 
     @api.multi
     def export_xlsx(self):
