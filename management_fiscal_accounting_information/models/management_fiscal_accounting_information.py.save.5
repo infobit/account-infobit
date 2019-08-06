@@ -155,12 +155,12 @@ class ManagementFiscalAccountingInformation(models.Model):
              }
           self.env['estructure.tax.line'].create(filtros)
           #BUSCAR APLICACIONES IMPUESTOS
-          self._cr.execute("SELECT t.type_tax_use as type, sum(it.base) as base, round(sum(round(it.amount,3)),2) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id inner join account_invoice i on it.invoice_id = i.id and " +
+          self._cr.execute("SELECT t.type_tax_use as type, sum(it.base) as base, round(sum(it.amount),2) as cuota FROM account_tax t inner join account_invoice_tax it on t.id = it.tax_id inner join account_invoice i on it.invoice_id = i.id and " +
 "(i.date_invoice between %s and %s) inner join type_taxes_information tti on t.type_taxes_information_id = tti.id and tti.exclude = 'n'  where t.id in %s group by t.type_tax_use", (self.date_start, self.date_end, tuple(taxes),))
           types = self._cr.dictfetchall()
           for type in types:
            #BUSCAR ACCOUNT.TAX.GROUPS DE LOS IMPUESTOS.
-           self._cr.execute("SELECT tax.type_taxes_information_id as group, sum(it.base) as base, round(sum(round(it.amount,3)),2) as cuota FROM account_invoice_tax it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax " +
+           self._cr.execute("SELECT tax.type_taxes_information_id as group, sum(it.base) as base, round(sum(it.amount),2) as cuota FROM account_invoice_tax it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax " +
 "on it.tax_id = tax.id inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id and tti.exclude = 'n' where i.state in ('open','paid') and it.tax_id in %s and (i.date_invoice between %s and %s) and tti.type_tax_use = %s and " +
 "tti.exclude = 'n'" +
 "group by tax.type_taxes_information_id", (tuple(taxes), self.date_start, self.date_end, type['type'], ))
@@ -170,24 +170,24 @@ class ManagementFiscalAccountingInformation(models.Model):
            for group in groups:
             if journals:
               if partners:
-               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tti.id as group, sum(it.base) as base, round(sum(round(it.amount,3)),2) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
+               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tti.id as group, sum(it.base) as base, round(sum(it.amount),2) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
 "it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax on it.tax_id = tax.id and tax.type_taxes_information_id = %s inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id where " +
 "i.state in ('open','paid') and it.tax_id in %s and (i.date_invoice between %s and %s) and i.partner_id in %s and i.journal_id in %s" +
 "group by it.tax_id, tti.exclude_amount_untaxes, i.type order by it.tax_id, i.type", (group['group'], tuple(taxes), self.date_start, self.date_end, tuple(partners), tuple(journals), ))
               else:
-               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tt.id as group, sum(it.base) as base, round(sum(round(it.amount,3)),2) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
+               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tt.id as group, sum(it.base) as base, roundsum(it.amount),2) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
 "it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax on it.tax_id = tax.id and tax.type_taxes_information_id = %s inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id where " +
 "i.state in ('open','paid') and it.tax_id in %s and (i.date_invoice between %s and %s) and i.journal_id in %s" +
 "group by it.tax_id, tti.exclude_amount_untaxes, tti.id, i.type order by it.tax_id, i.type", (group['group'], tuple(taxes), self.date_start, self.date_end, tuple(journals), ))
             else:
               if partners:
-               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tti.id as group, sum(it.base) as base, round(sum(round(it.amount,3)),2) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
+               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tti.id as group, sum(it.base) as base, sum(round(it.amount,2)) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
 "it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax on it.tax_id = tax.id and tax.type_taxes_information_id = %s inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id where " +
 "i.state in ('open','paid') and it.tax_id in %s and (i.date_invoice between %s and %s) and i.partner_id in %s" +
 "group by it.tax_id, tti.exclude_amount_untaxes, tti.id, i.type order by it.tax_id, i.type", (group['group'], tuple(taxes), self.date_start, self.date_end, tuple(partners), ))
 
               else:
-               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tti.id as group, sum(it.base) as base, round(sum(round(it.amount,3)),2) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
+               self._cr.execute("SELECT it.tax_id as impuesto, min(tax.name) as nombre, i.type as type, tti.id as group, sum(it.base) as base, sum(round(it.amount,2)) as cuota, tti.exclude_amount_untaxes as exclude_base FROM account_invoice_tax " +
 "it inner join account_invoice i on it.invoice_id = i.id inner join account_tax tax on it.tax_id = tax.id and tax.type_taxes_information_id = %s inner join type_taxes_information tti on tax.type_taxes_information_id = tti.id where " +
 "i.state in ('open','paid') and it.tax_id in %s and (i.date_invoice between %s and %s)" +
 "group by it.tax_id, tti.exclude_amount_untaxes, i.type, tti.id order by it.tax_id, i.type", (group['group'], tuple(taxes), self.date_start, self.date_end,))
@@ -389,10 +389,10 @@ class ManagementFiscalAccountingInformation(models.Model):
                  #buscar las lineas de impuestos de esa factura
                  idfactura = ele['id']
                  if reg.type == 'Venta' or reg.type == 'Abono venta':
-                  self._cr.execute("SELECT ti.tax_id as impuesto, t.name as nombreimpuesto, ti.base as base, round(round(ti.amount,3),2) as cuota, ty.type_tax_use as type_tax_use from account_invoice_tax ti "+
+                  self._cr.execute("SELECT ti.tax_id as impuesto, t.name as nombreimpuesto, ti.base as base, ti.amount as cuota, ty.type_tax_use as type_tax_use from account_invoice_tax ti "+
 "inner join account_tax t on ti.tax_id = t.id inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' where invoice_id =  %s", (idfactura,))
                  if reg.type == 'Compra' or reg.type == 'Abono compra':
-                  self._cr.execute("SELECT ti.tax_id as impuesto, t.name as nombreimpuesto, ti.base as base, round(round(ti.amount,3),2) as cuota, ty.type_tax_use as type_tax_use from account_invoice_tax ti " +
+                  self._cr.execute("SELECT ti.tax_id as impuesto, t.name as nombreimpuesto, ti.base as base, ti.amount as cuota, ty.type_tax_use as type_tax_use from account_invoice_tax ti " +
 "inner join account_tax t on ti.tax_id = t.id inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'purchase' where invoice_id =  %s", (idfactura,))
                  data2 = self._cr.dictfetchall()
                  #raise Warning(data2)
@@ -427,14 +427,14 @@ class ManagementFiscalAccountingInformation(models.Model):
             if taxes and journals:
               if partners:
                  self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
-"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, round(round(ti.amount,3),2) as " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
 "cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and t.id in %s and " +
 "t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
 "i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and i.partner_id in %s and i.journal_id in %s and (i.date_invoice between %s and %s) inner " +
 "join res_partner rp on i.partner_id = rp.id order by i.number", (tuple(taxes), tuple(partners), tuple(journals), self.date_start, self.date_end))
               else:
                  self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
-"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, round(round(ti.amount,3),2) as " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
 "cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and t.id in %s and " +
 "t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
 "i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and i.journal_id in %s and (i.date_invoice between %s and %s) inner join res_partner rp on " +
@@ -442,14 +442,14 @@ class ManagementFiscalAccountingInformation(models.Model):
             else:
               if partners:
                  self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
-"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, round(round(ti.amount,3),2) as " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
 "cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and " +
 "t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
 "i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and i.partner_id in %s and (i.date_invoice between %s and %s) inner join res_partner rp " +
 "on i.partner_id = rp.id order by i.number", (tuple(partners), self.date_start, self.date_end))
               else:
                  self._cr.execute("SELECT i.id as id, i.number as numero, ti.tax_id as impuesto, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id " +
-"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, round(round(ti.amount,3),2) as " +
+"as partner, i.amount_untaxed as baseinvoice, rp.name as empresa, rp.vat as cif, i.amount_total as total, t.name as nombreimpuesto, ti.base as base, ti.amount as " +
 "cuota, ty.type_tax_use as type_tax_use, i.type as tipo from account_invoice_tax ti inner join account_tax t on ti.tax_id = t.id and " +
 "t.generate_sale_intra = 's' inner join type_taxes_information ty on t.type_taxes_information_id = ty.id and ty.type_tax_use = 'sale' inner join account_invoice " +
 "i on ti.invoice_id = i.id and i.type in ('in_refund', 'in_invoice') and (i.date_invoice between %s and %s) inner join res_partner rp on i.partner_id = rp.id order " +
