@@ -1,25 +1,18 @@
 # Copyright 2018 Luis M. Ontalba <luismaront@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-import logging
-from odoo import _, models
-from odoo.tools.translate import _
-#from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsx
-_logger = logging.getLogger(__name__)
 
-class details_information_xlsx(models.AbstractModel):
-    _name = 'report.management_fiscal_accounting_information.details_information_xlsx'
+from odoo import _, models
+#from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsx
+
+class details_taxes_xlsx(models.AbstractModel):
+    _name = 'details.taxes.xlsx'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, objects):
-       #raise Warning(objects)
-       for o in objects:
-         report_name = o.name
-         #One sheet by object
-         sheet = workbook.add_worsheet(report_name[:31])
-         bold = workbook.add_format({'bold': True})
-         sheet.write(0, 0, obj.name, bold)
-        #raise Warning(data)
-        """def fill_table(sheet_name, lines, estructure_lines=False):
+        book = objects[0]
+        bold = workbook.add_format({'bold': True})
+
+        def fill_table(sheet_name, lines, estructure_lines=False):
             sheet = workbook.add_worksheet(sheet_name[:31])
             row = col = 0
             xlsx_header = [
@@ -72,7 +65,7 @@ class details_information_xlsx(models.AbstractModel):
         if book.estructure_tax_line_ids:
             report_name = _('')
             lines = book.estructure_tax_line_ids
-            fill_table(report_name, lines)"""
+            fill_table(report_name, lines)
         """if book.rectification_issued_line_ids:
             report_name = _('Issued Refund Invoices')
             lines = book.rectification_issued_line_ids
@@ -85,4 +78,3 @@ class details_information_xlsx(models.AbstractModel):
             report_name = _('Received Refund Invoices')
             lines = book.rectification_received_line_ids
             fill_table(report_name, lines, received_lines=True)"""
-

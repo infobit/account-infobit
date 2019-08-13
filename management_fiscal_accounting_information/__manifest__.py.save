@@ -27,7 +27,6 @@
         'views/type_taxes_information.xml',
         'views/account_tax.xml',
         'report/management_fiscal_accounting_information_xlsx.xml',
-        'report/report_management_fiscal_information.xml',
     ],
     "installable": True,
 }

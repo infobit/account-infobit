@@ -6,8 +6,8 @@ from odoo.tools.translate import _
 #from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsx
 _logger = logging.getLogger(__name__)
 
-class details_information_xlsx(models.AbstractModel):
-    _name = 'report.management_fiscal_accounting_information.details_information_xlsx'
+class details_taxes_xlsx(models.AbstractModel):
+    _name = 'report.management_fiscal_accounting_information.'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, objects):
@@ -85,4 +85,3 @@ class details_information_xlsx(models.AbstractModel):
             report_name = _('Received Refund Invoices')
             lines = book.rectification_received_line_ids
             fill_table(report_name, lines, received_lines=True)"""
-

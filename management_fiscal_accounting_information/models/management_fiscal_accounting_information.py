@@ -132,6 +132,37 @@ class ManagementFiscalAccountingInformation(models.Model):
                     self.year, month, monthrange(self.year, month)[1]))
             #self.export_config_id = self._get_export_config(self.date_start).id
 
+    @api.multi
+    def reload_registry(self):
+      if self.type == 's':
+         self.write({'state': 'draft'})
+         for line in self.estructure_tax_line_ids:
+             line.unlink()
+         res = self.calculate_taxes_iva_summary()
+      if self.type == 'd':
+         self.write({'state': 'draft'})
+         for line in self.estructure_tax_line_ids:
+             line.unlink()
+         res = self.calculate_details_taxes_iva()
+      if self.type == 'b':
+         self.write({'state': 'draft'})
+         for line in self.estructure_tax_line_ids:
+             line.unlink()
+         res = self.calculate_summary_book()
+      if self.type == 'b4':
+         self.write({'state': 'draft'})
+         for line in self.estructure_tax_line_ids:
+             line.unlink()
+         res = self.calculate_summary_book_balance4()
+      if self.type == 'bd':
+         self.write({'state': 'draft'})
+         for line in self.estructure_tax_line_ids:
+             line.unlink()
+         res = self.calculate_details_book()
+      self.write({'state': 'calculated',
+                    'calculation_date': fields.Datetime.now()})
+      return res
+
     #resumen de IVA
     @api.multi
     def calculate_taxes_iva_summary(self):

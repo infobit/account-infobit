@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="details_taxes_xlsx" model="ir.actions.report">
+    <!--<record id="details_taxes_xlsx" model="ir.actions.report">
         <field name="name">details taxes XLSX report</field>
         <field name="model">management_fiscal_accounting_information.ManagementFiscalAccountingInformation</field>
         <field name="type">ir.actions.report</field>
         <field name="report_name">management_fiscal_accounting_information.details_taxes_xlsx</field>
         <field name="report_type">xlsx</field>
         <field name="report_file">details_taxes_xlsx</field>
-    </record>
+    </record>-->
 
+    <report 
+      id="report_details_information_qweb"
+        model="management.fiscal.accounting.information"
+        string="Print"
+        report_type="qweb-pdf"
+        name="management_fiscal_accounting_information.report_management_fiscal_information"
+        file="management_fiscal_accounting_information.report_management_fiscal_information"
+        attachment_use="False"
+    />
+    <report
+        id="report_details_information_xlsx"
+        model="management.fiscal.accounting.information"
+        string="Print to XLSX"
+        report_type="xlsx"
+        name="management_fiscal_accounting_information.details_information_xlsx"
+        file="management_fiscal_accounting_information.details_information_xlsx"
+        attachment_use="False"
+    />
 </odoo>
