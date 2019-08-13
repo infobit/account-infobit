@@ -389,7 +389,7 @@ class ManagementFiscalAccountingInformation(models.Model):
                    'partner_id': ele['partner'],
                    'vat_number': ele['cif'],
                    'invoice_id': ele['id'],
-                   'amount_refund_untaxed': -ele['base'],
+                   #'amount_refund_untaxed': -ele['base'],
                    #'amount_tax': ele[''],
                    'amount_total': -ele['total'],
                  }

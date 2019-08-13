@@ -18,7 +18,7 @@
         file="management_fiscal_accounting_information.report_management_fiscal_information"
         attachment_use="False"
     />
-    <report
+    <!--<report
         id="report_details_information_xlsx"
         model="management.fiscal.accounting.information"
         string="Print to XLSX"
@@ -26,5 +26,5 @@
         name="management_fiscal_accounting_information.details_information_xlsx"
         file="management_fiscal_accounting_information.details_information_xlsx"
         attachment_use="False"
-    />
+    />-->
 </odoo>

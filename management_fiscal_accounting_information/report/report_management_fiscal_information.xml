@@ -4,12 +4,12 @@
   <template id="report_management_fiscal_information">
     <tr t-foreach="docs" t-as="o">
       <t t-if="o.type == 'd'">
-       <t t-call="web.basic_layout">
+       <t t-call="web.internal_layout">
           <div class="page">
-               <h1 t-field="o.estructure_tax_line_ids[0].ref"/>
-               <table class="table table-condensed" style="font-size:10.0px;">
+               <h2 t-field="o.estructure_tax_line_ids[0].ref"/>
+               <table class="table table-condensed" style="font-size:70%;"> <!--10.0px;">-->
                  <thead>
-                  <tr>
+                  <tr style="background-color:#D8D8D8">
                     <th>Factura</th>
                     <th>Tipo</th>
                     <th>Fecha</th>
@@ -19,16 +19,17 @@
                     <th class="text-right">Base</th>
                     <th class="text-right">Cuota</th>
                     <th class="text-right">total</th>
-                    <th class="text-right">Base Abo.</th>
+                    <!--<th class="text-right">Base Abo.</th>
                     <th class="text-right">Cuota Abo.</th>
                     <th class="text-right">Base total</th>
-                    <th class="text-right">Cuota total</th>
+                    <th class="text-right">Cuota total</th>-->
                   </tr>
                  </thead>
                  <tbody> 
                   <t t-foreach="o.estructure_tax_line_ids" t-as="l">
                    <tr t-if="l.ref != o.estructure_tax_line_ids[0].ref">
-                    <td t-if="l.ref"><strong t-esc="l.ref"/></td>
+                    <td t-if="l.ref and l.tax_id.name != l.ref"><strong t-esc="l.ref"/></td>
+                    <td t-if="l.ref and l.tax_id.name == l.ref"></td>
                     <td t-if="not l.ref"></td>
                     <td t-if="l.type"><span t-field="l.type"/></td>
                     <td t-if="not l.type"></td>
@@ -38,22 +39,22 @@
                     <td t-if="not l.partner_id"></td>
                     <td t-if="l.vat_number"><span t-field="l.vat_number"/></td>
                     <td t-if="not l.vat_number"></td>
-                    <td class="text-right" t-if="l.tax_id"><span t-esc="l.tax_id.amount"/></td>
+                    <td class="text-right" t-if="l.tax_id"><span t-esc="l.tax_id.name"/></td>
                     <td t-if="not l.tax_id"></td>
-                    <td class="text-right" t-if="l.amount_untaxed"><span t-field="l.amount_untaxed"/></td>
-                    <td class="text-right" t-if="not l.amount_untaxed"></td>
-                    <td class="text-right" t-if="l.amount_tax"><span t-field="l.amount_tax"/></td>
-                    <td t-if="not l.amount_tax"></td>
+                    <td class="text-right" t-if="l.type"><span t-field="l.amount_untaxed"/></td>
+                    <td class="text-right" t-if="not l.type"><span t-field="l.amount_total_untaxed"/></td>
+                    <td class="text-right" t-if="l.type"><span t-field="l.amount_tax"/></td>
+                    <td class="text-right" t-if="not l.type"><span t-field="l.amount_total_tax"/></td>
                     <td class="text-right" t-if="l.amount_total"><span t-field="l.amount_total"/></td>
                     <td t-if="not l.amount_total"></td>
-                    <td class="text-right" t-if="l.amount_refund_untaxed"><span t-field="l.amount_refund_untaxed"/></td>
+                    <!--<td class="text-right" t-if="l.amount_refund_untaxed"><span t-field="l.amount_refund_untaxed"/></td>
                     <td t-if="not l.amount_refund_untaxed"></td>
                     <td class="text-right" t-if="l.amount_refund_tax"><span t-field="l.amount_refund_tax"/></td>
                     <td t-if="not l.amount_refund_tax"></td>
                     <th class="text-right" t-if="l.amount_total_untaxed"><span t-field="l.amount_total_untaxed"/></th>
                     <th t-if="not l.amount_total_untaxed"></th>
                     <th class="text-right" t-if="l.amount_total_tax"><span t-field="l.amount_total_tax"/></th>
-                    <th t-if="not l.amount_total_tax"></th>
+                    <th t-if="not l.amount_total_tax"></th>-->
                    </tr>
                   </t>
                  </tbody>
@@ -62,12 +63,12 @@
        </t>
       </t>
       <t t-if="o.type == 's'">
-       <t t-call="web.basic_layout">
+       <t t-call="web.internal_layout">
           <div class="page">
-               <h1 t-field="o.estructure_tax_line_ids[0].ref"/>
-               <table class="table table-condensed" style="font-size:10.0px;">
+               <h2 t-field="o.estructure_tax_line_ids[0].ref"/>
+               <table class="table table-condensed" style="font-size:70%;">
                  <thead>
-                  <tr>
+                  <tr style="background-color:#D8D8D8">
                     <th>Referencia</th>
                     <th class="text-right">Base</th>
                     <th class="text-right">Cuota</th>
@@ -87,12 +88,12 @@
         </t>
        </t>
        <t t-if="o.type == 'b'">
-       <t t-call="web.basic_layout">
+       <t t-call="web.internal_layout">
           <div class="page">
-               <h1 t-field="o.estructure_tax_line_ids[0].ref"/>
-               <table class="table table-condensed" style="font-size:10.0px;">
+               <h2 t-field="o.estructure_tax_line_ids[0].ref"/>
+               <table class="table table-condensed" style="font-size:70%;">
                  <thead>
-                  <tr>
+                  <tr style="background-color:#D8D8D8">
                     <th>Año</th>
                     <th>Mes</th>
                     <th>Descripción</th>
@@ -121,12 +122,12 @@
        </t>
       </t>
       <t t-if="o.type == 'b4'">
-       <t t-call="web.basic_layout">
+       <t t-call="web.internal_layout">
           <div class="page">
-               <h1 t-field="o.estructure_tax_line_ids[0].ref"/>
-               <table class="table table-condensed" style="font-size:10.0px;">
+               <h2 t-field="o.estructure_tax_line_ids[0].ref"/>
+               <table class="table table-condensed" style="font-size:70%;">
                  <thead>
-                  <tr>
+                  <tr style="background-color:#D8D8D8">
                     <th>Descripción</th>
                     <th class="text-right">Debe</th>
                     <th class="text-right">Haber</th>
@@ -152,12 +153,12 @@
        </t>
       </t>
       <t t-if="o.type == 'bd'">
-       <t t-call="web.basic_layout">
+       <t t-call="web.internal_layout">
           <div class="page">
-               <h1 t-field="o.estructure_tax_line_ids[0].ref"/>
-               <table class="table table-condensed" style="font-size:10.0px;">
+               <h2 t-field="o.estructure_tax_line_ids[0].ref"/>
+               <table class="table table-condensed" style="font-size:70%;">
                  <thead>
-                  <tr>
+                  <tr style="background-color:#D8D8D8">
                     <th>Asiento</th>
                     <th>Fecha</th>
                     <th>Comentario</th>

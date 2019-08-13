@@ -1,0 +1,58 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_account_asset_asset_form_infobit">
+        <field name="name">account.asset.asset.form.infobit</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="fecha_compra"/>
+            </field>
+            <field name="value_residual" position="after">
+                <field name="valor_compra"/>
+                <field name="aa_logic"/>
+                <field name="fecha_venta"/>
+                <field name="importe_venta"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_asset_asset_tree_infobit">
+        <field name="name">account.asset.asset.tree.infobit</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_asset_purchase_tree"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="account_id"/>
+                <field name="fecha_compra"/>
+                <field name="valor_compra"/>
+            </field>
+            <field name="partner_id" position="replace">
+                <field name="partner_id" invisible="1"/>
+            </field>
+            <field name="value_residual" position="after">
+                <field name="fecha_venta"/>
+                <field name="importe_venta"/>
+                <field name="date_end"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_asset_asset_search_infobit">
+        <field name="name">account.asset.asset.search.infobit</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_search"/>
+        <field name="arch" type="xml">
+          <field name="category_id" position="after">
+            <field name="account_id"/>
+            <field name="fecha_compra"/>
+            <field name="fecha_venta"/>
+            <field name="importe_venta"/>
+            <field name="date_end"/>
+          </field>
+        </field>
+    </record>
+
+
+</data>
+</openerp>
+
