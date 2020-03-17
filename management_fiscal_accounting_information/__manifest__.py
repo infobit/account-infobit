@@ -17,6 +17,7 @@
        - El detalle de ivas
        - Libro contable resumen por grupos de cuentas
        - Libro contable detallado
+       - Detalle de impuestos (Para sacar retenciones, ...)
     """,
     'data': [
         'security/security.xml',

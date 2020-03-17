@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <data>
+  <template id="report_management_fiscal_information">
+    <tr t-foreach="docs" t-as="o">
+      <t t-if="o.type == 'd'">
+       <t t-call="web.basic_layout">
+          <div class="page">
+               <h1 t-field="o.estructure_tax_line_ids[0].ref"/>
+               <table class="table table-condensed" style="font-size:10.0px;">
+                 <thead>
+                  <tr>
+                    <th>Factura</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Empresa</th>
+                    <th>CIF</th>
+                    <th>Base</th>
+                    <th>Impuesto</th>
+                    <th>Cuota</th>
+                    <th>total</th>
+                    <th>Base Abo.</th>
+                    <th>Cuota Abo.</th>
+                    <th>Base total</th>
+                    <th>Cuota total</th>
+                  </tr>
+                 </thead>
+                 <tbody> 
+                   <!--<tr t-if="not l.amount_total_untaxed">
+                    <td colspan="8"><strong t-field="l.ref"/></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th></th> 
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   </tr>-->
+                   <tr t-if="l.ref != o.estructure_tax_line_ids[0].ref">
+                    <td><strong t-field="l.ref"/></td>
+                    <td><span t-field="l.type"/></td>
+                    <td><span t-field="l.invoice_date"/></td>
+                    <td><span t-field="l.partner_id.name"/></td>
+                    <td><span t-field="l.vat_number"/></td>
+                    <td><span t-field="l.tax_id"/></td>
+                    <td><span t-field="l.amount_untaxed"/></td>
+                    <td><span t-field="l.amount_tax"/></td>
+                    <th><span t-field="l.amount_total"/></th>
+                    <td><span t-field="l.amount_refund_untaxed"/></td>
+                    <td><span t-field="l.amount_refund_tax"/></td>
+                    <td><span t-field="l.amount_total_untaxed"/></td>
+                    <td><span t-field="l.amount_total_tax"/></td>
+                   </tr>
+                   <!--<tr t-if="l.amount_total_untaxed and not l.amount_untaxed">
+                    <td><strong t-field="l.ref"/></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                   </tr>-->
+                  </t>
+                 </tbody>
+               </table>
+          </div>
+       </t>
+      </t>
+      <t t-if="o.type == 's'">
+       <t t-call="web.basic_layout">
+          <div class="page">
+               <p t-field="o.name"/>
+               <p>Rango de fechas consultado: <span t-field="o.year"/> <span t-field="o.date_start"/> - <span t-field="o.date_end"/></p>
+               <table class="table table-condensed" style="font-size:10.0px;">
+                 <thead>
+                  <tr>
+                    <th>Referencia</th>
+                    <th>Base</th>
+                    <th>Cuota</th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                  <t t-set="primero" t-value="0"/> 
+                  <t t-foreach="o.estructure_tax_line_ids" t-as="l">
+                   <tr t-if="primero != 0">
+                    <td><strong t-field="l.ref"/></td>
+                    <td><span t-field="l.amount_total_untaxed"/></td>
+                    <td><span t-field="l.amount_total_tax"/></td>
+                   </tr>
+                   <t t-set="primero" t-value="primero+1"/>
+                  </t>
+                 </tbody>
+               </table>
+          </div>
+        </t>
+       </t>
+    </tr>
+  </template>
+ </data>
+</odoo>

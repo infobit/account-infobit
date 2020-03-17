@@ -173,4 +173,17 @@
             <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
     </record>
 
+    <!--action details all taxes -->
+    <record id="act_details_all_taxes" model="ir.actions.act_window">
+            <field name="name">Details all taxes</field>
+            <field name="res_model">estructure.tax.line</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_estructure_tax_line_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('management_id','=', active_id)]</field>
+            <field name="context">{'search_default_management_id': active_id}</field>
+            <!--<field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>-->
+    </record>
+
+
 </odoo>

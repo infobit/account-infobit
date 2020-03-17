@@ -941,43 +941,59 @@ class ManagementFiscalAccountingInformation(models.Model):
             #buscar las total impuesto del cliente y las condiciones filtradas.
             if taxes and journals:
               if partners:
-                self._cr.execute("SELECT i.partner_id as partner, l.tax_line_id as tax, sum(i.amount_untaxed) as base, abs(sum(l.debit - l.credit)) as cuota, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
+                self._cr.execute("SELECT i.partner_id as partner, sum(i.amount_untaxed) as base, sum(l.debit - l.credit) as cuota, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
 "inner join account_move_line l on i.id = l.invoice_id " +
 "inner join res_partner rp on i.partner_id = rp.id where i.state in ('open','paid') and l.tax_line_id in %s and (i.date between %s " + 
-"and %s) and i.journal_id in %s and i.partner_id in %s group by i.partner_id, l.tax_line_id, rp.name, rp.vat, " +
-"order by i.partner_id, l.tax_line_id ", (tuple(taxes), self.date_start, self.date_end, tuple(journals), tuple(partners), ))
+"and %s) and i.journal_id in %s and i.partner_id in %s group by i.partner_id, rp.name, rp.vat, " +
+"order by i.partner_id ", (tuple(taxes), self.date_start, self.date_end, tuple(journals), tuple(partners), ))
               else:
-                self._cr.execute("SELECT i.partner_id as partner, l.tax_line_id as tax, SUM(i.amount_untaxed) as base, abs(sum(l.debit - l.credit)) as cuota, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
+                self._cr.execute("SELECT i.partner_id as partner, SUM(i.amount_untaxed) as base, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
 "inner join account_move_line l on i.id = l.invoice_id inner join " +
 "res_partner rp on i.partner_id = rp.id where i.state in ('open','paid') and l.tax_line_id in %s and (i.date between %s " + 
-"and %s) and i.journal_id in %s group by i.partner_id, l.tax_line_id, rp.name, rp.vat " +
-"order by i.partner_id, l.tax_line_id ", (tuple(taxes), self.date_start, self.date_end, tuple(journals), ))
+"and %s) and i.journal_id in %s group by i.partner_id, rp.name, rp.vat " +
+"order by i.partner_id", (tuple(taxes), self.date_start, self.date_end, tuple(journals), ))
             else:
                if taxes and not journals:
                  if partners:
-                  self._cr.execute("SELECT i.partner_id as partner, l.tax_line_id as tax, sum(i.amount_untaxed) as base, abs(sum(l.debit - l.credit)) as cuota, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
+                  self._cr.execute("SELECT i.partner_id as partner, sum(i.amount_untaxed) as base, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
 "inner join account_move_line l on i.id = l.invoice_id inner join " +
 "res_partner rp on i.partner_id = rp.id where i.state in ('open','paid') and l.tax_line_id in %s and (i.date between %s " + 
-"and %s) and i.partner_id in %s group by i.partner_id, l.tax_line_id, rp.name, rp.vat, " +
-"order by i.partner_id, l.tax_line_id ", (tuple(taxes), self.date_start, self.date_end, tuple(partners), ))
+"and %s) and i.partner_id in %s group by i.partner_id, rp.name, rp.vat, " +
+"order by i.partner_id", (tuple(taxes), self.date_start, self.date_end, tuple(partners), ))
                  else:
-                  self._cr.execute("SELECT i.partner_id as partner, l.tax_line_id as tax, sum(i.amount_untaxed) as base, abs(sum(l.debit - l.credit)) as cuota, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
+                  self._cr.execute("SELECT i.partner_id as partner, sum(i.amount_untaxed) as base, rp.name as empresa, rp.vat as cif, sum(i.amount_total) as total FROM account_invoice i " +
 "inner join account_move_line l on i.id = l.invoice_id inner join " +
 "res_partner rp on i.partner_id = rp.id where i.state in ('open','paid') and l.tax_line_id in %s and (i.date between %s " + 
-"and %s) group by i.partner_id, l.tax_line_id, rp.name, rp.vat " +
-"order by i.partner_id, l.tax_line_id ", (tuple(taxes), self.date_start, self.date_end,))
+"and %s) group by i.partner_id, rp.name, rp.vat " +
+"order by i.partner_id", (tuple(taxes), self.date_start, self.date_end,))
                else:
                  raise UserError(_('Rellene los impuestos a consultar'))
             datac = self._cr.dictfetchall()
             for dc in datac:
                 factura = {
                    'management_id': self.id,
-                   'ref': dc['cif'] + "-" + dc['empresa'],
-                   'tax_id': dc['tax'],
-                   'amount_untaxed': dc['base'],
-                   'amount_tax': dc['cuota'],
+                   'partner_id': dc['partner'],
+                   'vat_number': dc['cif'],
+                   'amount_total': dc['total'],
                 }
                 reg = self.env['estructure.tax.line'].create(factura)
+                if reg:
+                 #buscar las lineas de impuestos de esa factura
+                 self._cr.execute("SELECT ti.tax_line_id as impuesto, t.name as nombreimpuesto, b.base as base, round(ti.debit - ti.credit,2) as cuota, ti.invoice_id, ti.move_id " +
+"from account_move_line ti inner join account_tax t on ti.tax_line_id = t.id inner join (select SUM(round(l.debit - l.credit,2)) " +
+"as base, rel.account_tax_id, l.invoice_id from account_move_line l inner join account_move_line_account_tax_rel rel on l.id = rel.account_move_line_id and l.tax_line_id is null group by rel.account_tax_id) as b on b.account_tax_id = " +
+"ti.tax_line_id  inner join where ti.tax_line_id in %s", (tuple(taxes), ))
+                 data2 = self._cr.dictfetchall()
+                 i = 0
+                 for impfac in data2:
+                    impfact = {
+                     'management_id': self.id,
+                     'tax_id': impfac['impuesto'], 
+                     'amount_untaxed': impfac['base'],
+                     'amount_tax': impfac['cuota'],
+                    }
+                    reg.write(impfact)
+                    i+=1
                 #DETALLE IMPUESTOS FILTRADOS
                 if taxes and journals:
                  self._cr.execute("SELECT i.id, min(i.reference) as reference, i.number as numero, i.type as tipo, to_char(i.date_invoice, 'YYYY-MM-DD') as fecha, i.partner_id as partner, " +
@@ -995,6 +1011,7 @@ class ManagementFiscalAccountingInformation(models.Model):
                  else:
                   raise UserError(_('Rellene los impuestos a consultar'))
                 data = self._cr.dictfetchall()
+                #raise Warning(data)
                 for ele in data:
                  nume = ele['numero']
                  #crear registro factura
@@ -1007,11 +1024,14 @@ class ManagementFiscalAccountingInformation(models.Model):
                   factura = {
                    'management_id': self.id,
                    'ref': nume,
-                   'type': tipoo,
+                   'type': tipoo, #ele['tipo'],
                    'invoice_date': ele['fecha'],
                    'partner_id': ele['partner'],
                    'vat_number': ele['cif'],
                    'invoice_id': ele['id'],
+                   #'amount_refund_untaxed': -ele['base'],
+                   #'amount_tax': ele[''],
+                   'amount_total': -ele['total'],
                   }
                  else:
                   if ele['tipo'] == 'out_invoice':
@@ -1022,12 +1042,20 @@ class ManagementFiscalAccountingInformation(models.Model):
                   factura = {
                    'management_id': self.id,
                    'ref': nume,
-                   'type': tip,
+                   'type': tip, #ele['tipo'],
+                   #'comment': ele[''],
+                   #'line_type': ,
                    'invoice_date': ele['fecha'],
                    'partner_id': ele['partner'],
                    'vat_number': ele['cif'],
                    'invoice_id': ele['id'],
+                   #'move_id': ,
+                   #'tax_id': ,
+                   'amount_untaxed': ele['base'],
+                   #'amount_tax': ele[''],
+                   'amount_total': ele['total'],
                   }
+                 #raise Warning(factura)
                  reg = self.env['estructure.tax.line'].create(factura)
                  if reg:
                   #buscar las lineas de impuestos de esa factura
@@ -1042,6 +1070,7 @@ class ManagementFiscalAccountingInformation(models.Model):
 "from account_move_line ti inner join account_tax t on ti.tax_line_id = t.id inner join (select sum(round(l.debit - l.credit,2)) " +
 "as base, rel.account_tax_id, l.invoice_id from account_move_line l inner join account_move_line_account_tax_rel rel on l.id = rel.account_move_line_id and l.tax_line_id is null group by rel.account_tax_id, l.invoice_id) as b on b.account_tax_id = ti.tax_line_id and b.invoice_id = ti.invoice_id where ti.invoice_id =  %s and ti.tax_line_id in %s", (idfactura, tuple(taxes), ))
                   data2 = self._cr.dictfetchall()
+                  #raise Warning(data2)
                   i = 0
                   for impfac in data2:
                    if ele['tipo'] == 'out_refund' or ele['tipo'] == 'in_refund':
@@ -1069,6 +1098,8 @@ class ManagementFiscalAccountingInformation(models.Model):
                    else:
                       regd = self.env['estructure.tax.line'].create(impfact)
                    i+=1
+            #BUSCAR EL RESUMEN DE Impuestos
+            #self.calculate_summary_all_taxes()
             self.write({'name': 'Detalle de Impuestos', 'type': 'dt'})
 
     @api.multi
@@ -1114,12 +1145,22 @@ class ManagementFiscalAccountingInformation(models.Model):
     def export_xlsx(self):
         self.ensure_one()
         context = dict(self.env.context, active_ids=self.ids)
+        """raise Warning({
+            'name': 'Details Taxes XLSX report',
+            'model': 'management.fiscal.accounting.information',
+            'type': 'ir.actions.report',
+            'report_name': 'management_fiscal_accounting_information.details_taxes_xlsx',
+            'report_type': 'xlsx',
+            'report_file': 'details.vat.book',
+            'context': context,
+        })"""
         return {
             'name': 'Details Taxes XLSX report',
             'model': 'management_fiscal_accounting_information.ManagementFiscalAccountingInformation',
             'type': 'ir.actions.report',
             'report_name': 'management_fiscal_accounting_information.details_taxes_xlsx',
             'report_type': 'xlsx',
+            #'report_file': 'details.vat.book',
             'context': context,
         }
 
